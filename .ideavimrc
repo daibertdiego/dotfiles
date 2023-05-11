@@ -1,0 +1,183 @@
+"" Source your .vimrc
+source ~/.vimrc
+
+Plug 'preservim/nerdtree'
+Plug 'easymotion/vim-easymotion'
+set ideajoin
+set vim-paragraph-motion
+set highlightedyank
+set textobj-indent
+set idearefactormode=keep
+set matchit
+set ideamarks
+set multiple-cursors
+set surround
+
+" easymotion
+set easymotion
+let g:EasyMotion_override_acejump = 0
+let g:EasyMotion_do_mapping = 0
+map <Leader><Leader>F <Plug>(easymotion-s)
+map <Leader><Leader>f <Plug>(easymotion-f)
+" map <Leader> <Plug>(easymotion-prefix)
+
+set clipboard=unnamedplus
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set number
+set showcmd
+
+"let mapleader = ','
+
+" Set space as Leader key
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+" remove highlights on enter
+nnoremap <CR> :noh<CR><CR>
+" don't yank overridden text when pasting in visual mode
+vnoremap p "_dP
+
+" jetbrains smart select/unselect
+nmap s <Action>(EditorSelectWord)
+nmap S <Action>(EditorUnSelectWord)
+vmap s <Action>(EditorSelectWord)
+vmap S <Action>(EditorUnSelectWord)
+
+" vim surround
+" Basic Commands:
+" cs Change surrounding
+" cst Change surrounding tag
+" ds Delete surrounding
+" dst Delete surrounding tag
+" ys Surround text object
+
+
+" compile
+map <leader>c <Action>(BuildProject)
+" run Program
+map <leader>r <Action>(RunClass)
+" debug
+:map <leader>d <Action>(Debug)
+" stop
+map <leader>q <Action>(Stop)
+" inspect
+map <leader>i <Action>(ShowErrorDescription)
+" tree
+map <leader>t <Action>(SelectInProjectView)
+" order
+map <leader>o <Action>(ReformatCode)
+" actions
+map <leader>a <Action>(GoToAction)
+" usages
+map <leader>u <Action>(FindUsages)
+" number
+map <leader>n :set relativenumber!<CR>
+" history
+map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+" line
+map <leader>db <Action>(ToggleLineBreakpoint)
+" reformat
+map <leader>f <Action>(ReformatCode)
+" save file
+map <leader>s <Action>(SaveAll)
+" toggle case
+map gh <Action>(StringManipulation.ToggleCase)<ESC>
+" toggle project explorer
+map <leader>e :NERDTreeToggle<CR>
+" close active tab
+map <S-q> <Action>(CloseEditor)
+" move to previous tab
+map <S-h> <Action>(PreviousTab)
+" move to next tab
+map <S-l> <Action>(NextTab)
+" comment by line
+map <leader>/ <Action>(CommentByLineComment)
+" comment by block
+map <leader><S-/> <Action>(CommentByBlockComment)
+" toggle terminal window
+map <leader>t <Action>(ActivateTerminalToolWindow)<CR>
+" open file in terminal
+map <leader><S-t> <Action>(Terminal.OpenInTerminal)
+
+" navigate errors
+map gj <Action>(GotoNextError)
+map gk <Action>(GotoPreviousError)
+" navigate local changes
+map g; <Action>(VcsShowNextChangeMarker)
+map g, <Action>(VcsShowPrevChangeMarker)
+" global search
+map <leader><leader> <Action>(FindInPath)
+" CamelCase/snake_case word motions
+map <leader>w [w
+map <leader>b [b
+" map <leader>e ]w
+" map <leader>ge ]b
+" multiple cursors
+map <C-A-l> <Action>(EditorAddCaretPerSelectedLine)
+map <A-k> <Action>(EditorCloneCaretAbove)
+map <A-.> <Plug>AllWholeOccurrences
+map <C-A-n> <Plug>NextOccurrence
+map <C-A-m> <Plug>AllOccurrences
+map <A-j> <Action>(EditorCloneCaretBelow)
+map <A-S-k> <Action>(MoveLineUp) "<A-S-Up>
+map <A-S-j> <Action>(MoveLineDown) "<A-S-Down>
+" panes
+map <C-A-j> <Action>(NextSplitter)
+map <C-A-k> <Action>(PrevSplitter)
+
+" refactor
+map <leader>jv <Action>(IntroduceVariable)
+map <leader>jm <Action>(ExtractMethod)
+map <leader>jc <Action>(IntroduceConstant)
+map <leader>gr <Action>(RenameElement)
+
+" Indent keeping selection
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+" Reselect pasted text
+nnoremap gp `[v`]
+
+" Make Y consistent with other capital letter actions (A, C, D...)
+nnoremap Y y$
+xnoremap Y y$
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+"set scrolloff=5
+
+" Do incremental searching.
+"set incsearch
+"set showmode
+
+" Don't use Ex mode, use Q for formatting.
+"map Q gq
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"Find more examples here: https://jb.gg/share-ideavimrc
+set clipboard+=ideaput
+
+" Using arrow keys is far too ingrained in my muscle memory.
+" map <up> <nop>
+" map <down> <nop>
+" map <left> <nop>
+" map <right> <nop>
+" imap <up> <nop>
+" imap <down> <nop>
+" imap <left> <nop>
+" imap <right> <nop>
+
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register without yanking it
+vnoremap <leader>p "_dP
