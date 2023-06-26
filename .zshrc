@@ -120,25 +120,25 @@ export GOPATH="$HOME/go"
 export PATH=$PATH:$GOPATH/bin
 alias go=richgo
 #source $(brew --prefix nvm)/nvm.sh
-unset JAVA_HOME
-source '/usr/local/Cellar/jenv/0.5.5_2/libexec/libexec/../completions/jenv.zsh'
-jenv rehash 2>/dev/null
-jenv refresh-plugins
-jenv() {
-  typeset command
-  command="$1"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
+# unset JAVA_HOME
+# source '/usr/local/Cellar/jenv/0.5.5_2/libexec/libexec/../completions/jenv.zsh'
+# jenv rehash 2>/dev/null
+# jenv refresh-plugins
+# jenv() {
+#   typeset command
+#   command="$1"
+#   if [ "$#" -gt 0 ]; then
+#     shift
+#   fi
 
-  case "$command" in
-  enable-plugin|rehash|shell|shell-options)
-    eval `jenv "sh-$command" "$@"`;;
-  *)
-    command jenv "$command" "$@";;
-  esac
-}
-source <(kubectl completion zsh)
+#   case "$command" in
+#   enable-plugin|rehash|shell|shell-options)
+#     eval `jenv "sh-$command" "$@"`;;
+#   *)
+#     command jenv "$command" "$@";;
+#   esac
+# }
+# source <(kubectl completion zsh)
 eval "$(starship init zsh)"
 
 # alias nvim=lvim
@@ -152,5 +152,5 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
