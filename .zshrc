@@ -112,9 +112,9 @@ source /Users/diegodaibert/.oh-my-zsh/plugins/fast-syntax-highlighting/fast-synt
 source /Users/diegodaibert/.oh-my-zsh/plugins/completion.zsh
 
 source /Users/diegodaibert/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval export PATH="/Users/diegodaibert/.jenv/shims:${PATH}"
-export JENV_SHELL=zsh
-export JENV_LOADED=1
+# eval export PATH="/Users/diegodaibert/.jenv/shims:${PATH}"
+# export JENV_SHELL=zsh
+# export JENV_LOADED=1
 export NVM_DIR=~/.nvm
 export GOPATH="$HOME/go" 
 export PATH=$PATH:$GOPATH/bin
@@ -130,7 +130,7 @@ alias go=richgo
 #   if [ "$#" -gt 0 ]; then
 #     shift
 #   fi
-
+# 
 #   case "$command" in
 #   enable-plugin|rehash|shell|shell-options)
 #     eval `jenv "sh-$command" "$@"`;;
