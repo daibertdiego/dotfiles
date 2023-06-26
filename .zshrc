@@ -112,32 +112,32 @@ source /Users/diegodaibert/.oh-my-zsh/plugins/fast-syntax-highlighting/fast-synt
 source /Users/diegodaibert/.oh-my-zsh/plugins/completion.zsh
 
 source /Users/diegodaibert/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval export PATH="/Users/diegodaibert/.jenv/shims:${PATH}"
-export JENV_SHELL=zsh
-export JENV_LOADED=1
+# eval export PATH="/Users/diegodaibert/.jenv/shims:${PATH}"
+# export JENV_SHELL=zsh
+# export JENV_LOADED=1
 export NVM_DIR=~/.nvm
 export GOPATH="$HOME/go" 
 export PATH=$PATH:$GOPATH/bin
 alias go=richgo
 #source $(brew --prefix nvm)/nvm.sh
-unset JAVA_HOME
-source '/usr/local/Cellar/jenv/0.5.5_2/libexec/libexec/../completions/jenv.zsh'
-jenv rehash 2>/dev/null
-jenv refresh-plugins
-jenv() {
-  typeset command
-  command="$1"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
-
-  case "$command" in
-  enable-plugin|rehash|shell|shell-options)
-    eval `jenv "sh-$command" "$@"`;;
-  *)
-    command jenv "$command" "$@";;
-  esac
-}
+# unset JAVA_HOME
+# source '/usr/local/Cellar/jenv/0.5.5_2/libexec/libexec/../completions/jenv.zsh'
+# jenv rehash 2>/dev/null
+# jenv refresh-plugins
+# jenv() {
+#   typeset command
+#   command="$1"
+#   if [ "$#" -gt 0 ]; then
+#     shift
+#   fi
+# 
+#   case "$command" in
+#   enable-plugin|rehash|shell|shell-options)
+#     eval `jenv "sh-$command" "$@"`;;
+#   *)
+#     command jenv "$command" "$@";;
+#   esac
+# }
 source <(kubectl completion zsh)
 eval "$(starship init zsh)"
 
@@ -154,3 +154,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+Adding Conflict line!!!
