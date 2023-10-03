@@ -51,3 +51,13 @@ vim.keymap.set("n", "<leader>Y", [[:%y+<CR>]])
 vim.keymap.set("v", "<leader>Y", [["y+]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+
+
+-- Check if we are inside tmux
+if vim.fn.exists('$TMUX') == 1 then
+  --  Remap C-a to be typed twice when inside tmux
+  keymap('n', '<C-a>', '<C-a><C-a>', opts)
+else
+  -- Use the default behavior of C-a outside tmux
+  keymap('n', '<C-a>', '<C-a>', opts)
+end

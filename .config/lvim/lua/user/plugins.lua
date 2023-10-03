@@ -3,6 +3,7 @@ lvim.plugins = {
   "mfussenegger/nvim-jdtls",
   "rcarriga/nvim-dap-ui",
   "tpope/vim-fugitive",
+  'nvim-treesitter/nvim-treesitter-textobjects',
   {
     "saecki/crates.nvim",
     version = "v0.3.0",
@@ -87,20 +88,18 @@ lvim.plugins = {
     }
   },
   {
-    "olexsmir/gopher.nvim",
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
     config = function()
-      require("gopher").setup {
-        commands = {
-          go = "go",
-          gomodifytags = "gomodifytags",
-          gotests = "gotests",
-          impl = "impl",
-          iferr = "iferr",
-        },
-      }
+      require("go").setup()
     end,
-    ft = { "go", "gomod" },
-    event = { "BufRead", "BufNew" },
+    event = { "CmdlineEnter" },
+    ft = { "go", 'gomod' },
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
   {
     "leoluz/nvim-dap-go",
@@ -124,5 +123,12 @@ lvim.plugins = {
     config = function()
       require("symbols-outline").setup()
     end
+  },
+  {
+    "mbbill/undotree"
+  },
+  {
+    "ayu-theme/ayu-vim"
   }
+
 }
