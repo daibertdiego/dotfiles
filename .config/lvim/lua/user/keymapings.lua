@@ -47,17 +47,7 @@ vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [[:%y+<CR>]])
-vim.keymap.set("v", "<leader>Y", [["y+]])
+vim.keymap.set("n", "<leader><leader>y", [[:%y+<CR>]])
+vim.keymap.set("v", "<leader><leader>y", [["y+]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-
-
--- Check if we are inside tmux
-if vim.fn.exists('$TMUX') == 1 then
-  --  Remap C-a to be typed twice when inside tmux
-  keymap('n', '<C-a>', '<C-a><C-a>', opts)
-else
-  -- Use the default behavior of C-a outside tmux
-  keymap('n', '<C-a>', '<C-a>', opts)
-end
