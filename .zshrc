@@ -74,9 +74,14 @@ export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 fpath=(~/.zsh.d/ $fpath)
 autoload -Uz +X compinit bashcompinit
 compinit
 bashcompinit
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND="fd --type f"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type d"
+bindkey '^r' fzf-history-widget

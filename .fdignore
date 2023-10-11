@@ -1,0 +1,15 @@
+/go/
+**/node_modules/
+**/target/
+*.idea
+**/.DS_STORE
+Music/
+Movies/
+Library/
+Applications/
+/.config/raycast/
+
+# Do not ignore those files/folders
+!/.config/
+!/.dotfiles/
+
