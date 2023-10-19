@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 zstyle ':omz:plugins:nvm' lazy yes
-plugins=(git zsh-vi-mode zsh-autosuggestions copypath copyfile zsh-syntax-highlighting web-search)
+plugins=(git zsh-vi-mode zsh-autosuggestions copypath copyfile zsh-syntax-highlighting web-search fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -80,8 +80,9 @@ autoload -Uz +X compinit bashcompinit
 compinit
 bashcompinit
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND="fd --type f"
+# Append a command directly
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+export FZF_DEFAULT_COMMAND="fd --type f . $HOME"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type d"
+export FZF_ALT_C_COMMAND="fd --type d . $HOME"
 bindkey '^r' fzf-history-widget
