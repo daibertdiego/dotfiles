@@ -56,6 +56,7 @@ local servers = {
 	"emmet_ls",
 	"html",
 	"tailwindcss",
+	"kotlin_language_server",
 }
 
 -- Ensure servers are installed
