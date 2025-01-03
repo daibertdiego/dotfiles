@@ -1,0 +1,5 @@
+[plugin]
+deps = [{ use = "yazi-rs/plugins:smart-enter", rev = "600614a" }]
+
+[flavor]
+deps = [{ use = "tkapias/nightfly", rev = "599b8ad" }, { use = "yazi-rs/flavors:catppuccin-mocha", rev = "fc8eeaa" }]
