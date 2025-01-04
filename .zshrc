@@ -67,6 +67,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d . $HOME"
 bindkey '^r' fzf-history-widget
 
+export EDITOR=nvim
+
 # SDKMAN
 lazy_sdkman() {
   export SDKMAN_DIR="$HOME/.sdkman"
