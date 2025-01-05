@@ -1,3 +1,5 @@
+local icons = require("lib.icons").diagnostics
+
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
@@ -66,7 +68,13 @@ require("mason-lspconfig").setup({
 
 -- nvim-cmp capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities = require("blink.cmp").get_lsp_capabilities()
+
+local signs = { Error = icons.Error, Warn = icons.Warning, Hint = icons.Hint, Info = icons.Information }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 -- Setup LSP for all servers
 for _, lsp in ipairs(servers) do

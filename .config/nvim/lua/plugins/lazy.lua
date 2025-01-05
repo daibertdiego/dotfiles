@@ -311,16 +311,23 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ -- Autocompletion
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"L3MON4D3/LuaSnip",
-			"hrsh7th/cmp-calc",
-			"hrsh7th/cmp-buffer", -- source for text in buffer
-			"hrsh7th/cmp-path", -- source for file system paths
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
 		},
+	},
+	{ -- Autocompletion
+		"saghen/blink.cmp",
+		dependencies = { "rafamadriz/friendly-snippets", "giuxtaposition/blink-cmp-copilot" },
+		version = "*",
+		opts_extend = { "sources.default" },
+		event = { "InsertEnter" },
 	},
 	{
 		"mrcjkb/rustaceanvim", -- Rust support for run and debug code.
@@ -373,8 +380,12 @@ require("lazy").setup({
 		},
 		config = true,
 	},
-	{ "github/copilot.vim" },
-	-- -- {
+	{
+		"zbirenbaum/copilot.lua",
+		dependencies = { "giuxtaposition/blink-cmp-copilot" },
+		event = "InsertEnter",
+	},
+	-- {
 	--   --   'Exafunction/codeium.vim',
 	--   --   event = "InsertEnter",
 	--   --   config = function ()
