@@ -14,19 +14,19 @@ vim.keymap.set("n", "<leader>bk", ":blast<CR>", { noremap = true, silent = true,
 vim.keymap.set("n", "<leader>bj", ":bfirst<CR>", { noremap = true, silent = true, desc = "Go to the first buffer" })
 vim.keymap.set("n", "<leader>bb", ":bprev<CR>", { noremap = true, silent = true, desc = "Go to the previous buffer" })
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Go to the next buffer" })
-vim.keymap.set(
-	"n",
-	"<leader>bd",
-	":bdelete!<CR>",
-	{ noremap = true, silent = true, desc = "Delete the current buffer" }
-)
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<leader>bd",
+-- 	":bdelete!<CR>",
+-- 	{ noremap = true, silent = true, desc = "Delete the current buffer" }
+-- )
 vim.keymap.set(
 	"n",
 	"<leader>bc",
 	":bdelete!<CR>",
 	{ noremap = true, silent = true, desc = "Delete the current buffer" }
 )
--- vim.keymap.set("n", "<leader>q", ":bdelete<CR>", { noremap = true, silent = true, desc = "Delete the current buffer" })
+vim.keymap.set("n", "<leader>q", ":bdelete<CR>", { noremap = true, silent = true, desc = "Delete the current buffer" })
 
 vim.keymap.set("n", "<leader>q", function()
 	local quickfix_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
@@ -99,13 +99,14 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Disabl
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Up with wrap handling" })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Down with wrap handling" })
 
--- Noice
-vim.keymap.set(
-	"n",
-	"<space><space>",
-	":Noice dismiss<CR>",
-	{ noremap = true, silent = true, desc = "Dismiss Noice notifications" }
-)
+-- -- Noice
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<space><space>",
+-- 	":Noice dismiss<CR>",
+-- 	{ noremap = true, silent = true, desc = "Dismiss Noice notifications" }
+-- )
+
 -- Search and replace
 vim.keymap.set(
 	"n",

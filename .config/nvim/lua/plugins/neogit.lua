@@ -25,11 +25,11 @@ vim.keymap.set(
 	{ silent = true, noremap = true, desc = "Push changes with Neogit" }
 )
 
-vim.keymap.set(
-	"n",
-	"<leader>gb",
-	":Telescope git_branches<CR>",
-	{ silent = true, noremap = true, desc = "Telescope: Git branches" }
-)
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<leader>gb",
+-- 	":Telescope git_branches<CR>",
+-- 	{ silent = true, noremap = true, desc = "Telescope: Git branches" }
+-- )
 
-vim.keymap.set("n", "<leader>gB", ":G blame<CR>", { silent = true, noremap = true, desc = "Git blame" })
+-- vim.keymap.set("n", "<leader>gB", ":G blame<CR>", { silent = true, noremap = true, desc = "Git blame" })

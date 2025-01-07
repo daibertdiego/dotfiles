@@ -16,6 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.o.termguicolors = true
 
 require("lazy").setup({
+	require("plugins.snack"),
 	{ "catppuccin/nvim", as = "catppuccin" },
 	"tpope/vim-commentary",
 	{
@@ -23,16 +24,6 @@ require("lazy").setup({
 		event = "VimEnter",
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
-	{
-		"rcarriga/nvim-notify",
-		config = function()
-			require("notify").setup({
-				background_colour = "#000000",
-				enabled = false,
-			})
-		end,
-	},
-	-- Add *** to value fields on env files.
 	{
 		"laytan/cloak.nvim",
 	},
@@ -197,7 +188,6 @@ require("lazy").setup({
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
 		},
 	},
 	{
@@ -219,7 +209,6 @@ require("lazy").setup({
 		end,
 	},
 	-- Git related plugins
-	"tpope/vim-fugitive",
 	"lewis6991/gitsigns.nvim",
 	{
 		"NeogitOrg/neogit",
@@ -385,26 +374,5 @@ require("lazy").setup({
 		dependencies = { "giuxtaposition/blink-cmp-copilot" },
 		event = "InsertEnter",
 	},
-	-- {
-	--   --   'Exafunction/codeium.vim',
-	--   --   event = "InsertEnter",
-	--   --   config = function ()
-	--     --     -- Change '<C-g>' here to any keycode you like.
-	--     --     vim.keymap.set('i', '<C-e>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-	--     --     vim.keymap.set('i', '<c-n>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
-	--     --     vim.keymap.set('i', '<c-p>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-	--     --     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-	--     --   end
-	--     -- },
-	--     -- "preservim/vim-pencil",
-	--     -- {
-	--       --   "epwalsh/obsidian.nvim",
-	--       --   version = "*",  -- recommended, use latest release instead of latest commit
-	--       --   lazy = true,
-	--       --   ft = "markdown",
-	--       --   dependencies = {
-	--         --     "nvim-lua/plenary.nvim",
-	--         --   },
-	--         -- },
 	--         'ThePrimeagen/git-worktree.nvim',
 })
