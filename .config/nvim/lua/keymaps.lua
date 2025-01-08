@@ -14,12 +14,12 @@ vim.keymap.set("n", "<leader>bk", ":blast<CR>", { noremap = true, silent = true,
 vim.keymap.set("n", "<leader>bj", ":bfirst<CR>", { noremap = true, silent = true, desc = "Go to the first buffer" })
 vim.keymap.set("n", "<leader>bb", ":bprev<CR>", { noremap = true, silent = true, desc = "Go to the previous buffer" })
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Go to the next buffer" })
--- vim.keymap.set(
--- 	"n",
--- 	"<leader>bd",
--- 	":bdelete!<CR>",
--- 	{ noremap = true, silent = true, desc = "Delete the current buffer" }
--- )
+vim.keymap.set(
+	"n",
+	"<leader>bd",
+	":bdelete!<CR>",
+	{ noremap = true, silent = true, desc = "Delete the current buffer" }
+)
 vim.keymap.set(
 	"n",
 	"<leader>bc",

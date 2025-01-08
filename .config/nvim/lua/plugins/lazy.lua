@@ -64,6 +64,12 @@ require("lazy").setup({
 			require("refactoring").setup()
 		end,
 	},
+	-- Better hover pop-up
+	{
+		"Fildo7525/pretty_hover",
+		event = "LspAttach",
+		opts = {},
+	},
 	"nvim-lualine/lualine.nvim", -- Fancier statusline
 	-- Show opened buffers at the top
 	{
@@ -199,6 +205,14 @@ require("lazy").setup({
 		dependencies = "nvim-lua/plenary.nvim",
 		config = function()
 			require("todo-comments").setup({})
+		end,
+	},
+	{
+		"atiladefreitas/dooing",
+		config = function()
+			require("dooing").setup({
+				-- your custom config here (optional)
+			})
 		end,
 	},
 	-- Floating terminals

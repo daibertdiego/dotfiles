@@ -99,7 +99,7 @@ return {
 			desc = "which_key_ignore",
 		},
 		{
-			"]]",
+			"..",
 			function()
 				Snacks.words.jump(vim.v.count1)
 			end,
@@ -107,7 +107,7 @@ return {
 			mode = { "n", "t" },
 		},
 		{
-			"[[",
+			",,",
 			function()
 				Snacks.words.jump(-vim.v.count1)
 			end,

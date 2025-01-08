@@ -3,7 +3,8 @@ local icons = require("lib.icons")
 blink.setup({
 	-- 'default', 'super-tab', 'enter'
 	keymap = {
-		preset = "super-tab",
+		preset = "enter",
+		["<CR>"] = { "select_and_accept", "fallback" },
 
 		cmdline = {
 			preset = "enter",
@@ -13,7 +14,12 @@ blink.setup({
 	},
 	-- 'preselect', 'manual', 'auto_insert'
 	completion = {
-		list = { selection = "auto_insert" },
+		-- list = { selection = {auto_insert = true }},
+		list = { selection = {
+			preselect = function(ctx)
+				return ctx.mode ~= "cmdline"
+			end,
+		} },
 		menu = { border = "rounded" },
 		documentation = { window = { border = "rounded" } },
 	},
@@ -31,7 +37,7 @@ blink.setup({
 			copilot = {
 				name = "copilot",
 				module = "blink-cmp-copilot",
-				score_offset = 90,
+				score_offset = 1,
 				async = true,
 				transform_items = function(_, items)
 					local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
@@ -52,4 +58,20 @@ blink.setup({
 			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 		},
 	},
+})
+
+-- Hide Copilot on suggestion
+vim.api.nvim_create_autocmd("User", {
+	pattern = "BlinkCmpMenuOpen",
+	callback = function()
+		require("copilot.suggestion").dismiss()
+		vim.b.copilot_suggestion_hidden = true
+	end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "BlinkCmpMenuClose",
+	callback = function()
+		vim.b.copilot_suggestion_hidden = false
+	end,
 })
