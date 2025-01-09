@@ -22,6 +22,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "a84ab829eaf3678b586609888ef52f7779102263" },
   "hop.nvim": { "branch": "master", "commit": "08ddca799089ab96a6d1763db0b8adc5320bf050" },
   "hurl.nvim": { "branch": "main", "commit": "438360f62e73e8d149f0374d9d1d75c1441807e3" },
+  "jsonfly.nvim": { "branch": "main", "commit": "d713d9ef38115ab09b4a2828dac67b2b3f7d35c4" },
   "lazy.nvim": { "branch": "main", "commit": "d8f26efd456190241afd1b0f5235fe6fdba13d4a" },
   "lazydev.nvim": { "branch": "main", "commit": "8620f82ee3f59ff2187647167b6b47387a13a018" },
   "lspkind.nvim": { "branch": "master", "commit": "d79a1c3299ad0ef94e255d045bed9fa26025dab6" },
