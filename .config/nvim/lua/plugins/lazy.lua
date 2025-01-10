@@ -17,6 +17,7 @@ vim.o.termguicolors = true
 
 require("lazy").setup({
 	require("plugins.snack"),
+	require("plugins.ufo"),
 	{ "catppuccin/nvim", as = "catppuccin" },
 	"tpope/vim-commentary",
 	{
@@ -327,10 +328,27 @@ require("lazy").setup({
 	},
 	{ -- Autocompletion
 		"saghen/blink.cmp",
-		dependencies = { "rafamadriz/friendly-snippets", "giuxtaposition/blink-cmp-copilot" },
+		dependencies = { "moyiz/blink-emoji.nvim", "giuxtaposition/blink-cmp-copilot" },
 		version = "*",
 		opts_extend = { "sources.default" },
 		event = { "InsertEnter" },
+	},
+	-- Snippets
+	{
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+	},
+	{
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({
+				-- I want which key to only popup if I don't remember the key
+				delay = 1500,
+			})
+		end,
 	},
 	{
 		"mrcjkb/rustaceanvim", -- Rust support for run and debug code.

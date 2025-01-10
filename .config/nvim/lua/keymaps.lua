@@ -174,3 +174,19 @@ vim.keymap.set(
 	toggle_float_term,
 	{ noremap = true, silent = true, desc = "Toggle floating terminal" }
 )
+
+-- Open Neovim config
+vim.keymap.set("n", "<leader>nc", function()
+	vim.cmd("edit " .. vim.fn.stdpath("config") .. "/init.lua")
+end, { desc = "Edit Neovim config" })
+
+-- Reload Neovim config
+vim.keymap.set("n", "<leader>nr", function()
+	vim.cmd("source " .. vim.fn.stdpath("config") .. "/init.lua")
+	print("Config reloaded!")
+end, { desc = "Source Neovim config" })
+
+-- Open plugin configuration
+vim.keymap.set("n", "<leader>np", function()
+	vim.cmd("edit " .. vim.fn.stdpath("config") .. "/lua/plugins/lazy.lua")
+end, { desc = "Edit plugins config" })
