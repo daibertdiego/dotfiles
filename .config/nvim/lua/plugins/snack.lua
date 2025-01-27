@@ -13,7 +13,7 @@ return {
 			timeout = 3000,
 		},
 		quickfile = { enabled = true },
-		scroll = { enabled = true }, -- Already using mini.animate
+		scroll = { enabled = false }, -- Already using mini.animate
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
 		-- terminal = {
