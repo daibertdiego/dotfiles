@@ -139,6 +139,12 @@ function load_api_keys
     set -gx ANTHROPIC_API_KEY (cat $ANTHROPIC_API_CACHE)
 end
 
+
+# List windows being used from Aerospace
+function ff
+    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
+end
+
 function fish_greeting
     set now (date '+%A, %B %d %Y, %H:%M:%S')
     echo "📅 $now"
@@ -167,3 +173,6 @@ fzf_configure_bindings --directory=\cf --git_status=\cs --processes=\cp
 # ~/.config/fish/config.fish
 starship init fish | source
 zoxide init fish | source
+
+# Generated for envman. Do not edit.
+test -s ~/.config/envman/load.fish; and source ~/.config/envman/load.fish
