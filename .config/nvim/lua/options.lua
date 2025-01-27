@@ -5,6 +5,7 @@
 -- vim.g.dap_log_level = 3 -- Debug level logging
 -- vim.g.dap_log_to_file = true -- Log to file
 
+vim.opt.mousescroll = "ver:1,hor:1"
 vim.opt.expandtab = true -- convert tabs to spces
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab

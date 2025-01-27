@@ -35,10 +35,6 @@ blink.setup({
 				border = "rounded",
 			},
 		},
-		-- Displays a preview of the selected item on the current line
-		ghost_text = {
-			enabled = true,
-		},
 	},
 	snippets = {
 		preset = "luasnip",
@@ -70,16 +66,9 @@ blink.setup({
 		default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji" },
 		providers = {
 			lsp = {
-				name = "lsp",
+				name = "Lsp",
 				enabled = true,
 				module = "blink.cmp.sources.lsp",
-				-- kind = "LSP",
-				-- When linking markdown notes, I would get snippets and text in the
-				-- suggestions, I want those to show only if there are no LSP
-				-- suggestions
-				-- Disabling fallbacks as my snippets wouldn't show up
-				-- Enabled fallbacks as this seems to be working now
-				fallbacks = { "snippets", "buffer" },
 				score_offset = 90, -- the higher the number, the higher the priority
 			},
 			path = {
@@ -89,7 +78,7 @@ blink.setup({
 				-- When typing a path, I would get snippets and text in the
 				-- suggestions, I want those to show only if there are no path
 				-- suggestions
-				fallbacks = { "snippets", "buffer" },
+				fallbacks = { "buffer" },
 				opts = {
 					trailing_slash = false,
 					label_trailing_slash = true,
@@ -124,10 +113,10 @@ blink.setup({
 				end,
 			},
 			snippets = {
-				name = "snippets",
+				name = "Snippets",
 				enabled = true,
-				max_items = 8,
-				min_keyword_length = 2,
+				-- max_items = 8,
+				min_keyword_length = 0,
 				module = "blink.cmp.sources.snippets",
 				score_offset = 85, -- the higher the number, the higher the priority
 				-- Only show snippets if I type the trigger_text characters, so
@@ -155,13 +144,10 @@ blink.setup({
 							}
 						end
 					end
-					-- NOTE: After the transformation, I have to reload the luasnip source
-					-- Otherwise really crazy shit happens and I spent way too much time
-					-- figurig this out
-					vim.schedule(function()
-						require("blink.cmp").reload("snippets")
-					end)
-					return items
+					-- Return only Snippets and ignore all the rest
+					return vim.tbl_filter(function(item)
+						return item.kind == require("blink.cmp.types").CompletionItemKind.Snippet
+					end, items)
 				end,
 			},
 			-- Example on how to configure dadbod found in the main repo

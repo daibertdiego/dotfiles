@@ -38,7 +38,7 @@ require("nvim-treesitter.configs").setup({
 			node_decremental = "<c-backspace>",
 		},
 	},
-	-- Trying to improve startup time.
+	-- Trying to improve startup time and using mini.ai for extra navigation options.
 	-- textobjects = {
 	-- 	select = {
 	-- 		enable = true,

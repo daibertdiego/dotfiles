@@ -13,7 +13,7 @@ return {
 			timeout = 3000,
 		},
 		quickfile = { enabled = true },
-		scroll = { enabled = true },
+		scroll = { enabled = true }, -- Already using mini.animate
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
 		-- terminal = {
@@ -91,13 +91,13 @@ return {
 		-- 	end,
 		-- 	desc = "Toggle Terminal",
 		-- },
-		{
-			"<c-h>",
-			function()
-				Snacks.toggle()
-			end,
-			desc = "which_key_ignore",
-		},
+		-- {
+		-- 	"<c-h>",
+		-- 	function()
+		-- 		Snacks.toggle()
+		-- 	end,
+		-- 	desc = "which_key_ignore",
+		-- },
 		{
 			"..",
 			function()

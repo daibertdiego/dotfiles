@@ -19,7 +19,7 @@ require("lazy").setup({
 	require("plugins.snack"),
 	require("plugins.ufo"),
 	{ "catppuccin/nvim", as = "catppuccin" },
-	"tpope/vim-commentary",
+	{ "echasnovski/mini.nvim", version = false },
 	{
 		"nvimdev/dashboard-nvim",
 		event = "VimEnter",
@@ -81,7 +81,6 @@ require("lazy").setup({
 			require("bufferline").setup({})
 		end,
 	},
-	"tpope/vim-surround",
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	"tpope/vim-dadbod", -- Connect with DBs from nvim.
 	-- Dadbod UI for nvim
@@ -104,23 +103,9 @@ require("lazy").setup({
 		end,
 	},
 	"onsails/lspkind.nvim",
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	},
 	-- Open and Sync Browser with code.
 	{
 		"ray-x/web-tools.nvim",
-	},
-	{
-		"smoka7/hop.nvim",
-		version = "*",
-		opts = {
-			keys = "etovxqpdygfblzhckisuran",
-		},
 	},
 	-- Show color highlights
 	{
@@ -210,6 +195,7 @@ require("lazy").setup({
 	},
 	{
 		"atiladefreitas/dooing",
+		-- version = "2.4.4",
 		config = function()
 			require("dooing").setup({
 				-- your custom config here (optional)
@@ -328,18 +314,20 @@ require("lazy").setup({
 	},
 	{ -- Autocompletion
 		"saghen/blink.cmp",
-		dependencies = { "moyiz/blink-emoji.nvim", "giuxtaposition/blink-cmp-copilot" },
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			{
+				"L3MON4D3/LuaSnip",
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load()
+				end,
+			},
+			"moyiz/blink-emoji.nvim",
+			"giuxtaposition/blink-cmp-copilot",
+		},
 		version = "*",
 		opts_extend = { "sources.default" },
 		event = { "InsertEnter" },
-	},
-	-- Snippets
-	{
-		"L3MON4D3/LuaSnip",
-		-- follow latest release.
-		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!).
-		build = "make install_jsregexp",
 	},
 	{
 		"folke/which-key.nvim",
@@ -405,6 +393,13 @@ require("lazy").setup({
 		"zbirenbaum/copilot.lua",
 		dependencies = { "giuxtaposition/blink-cmp-copilot" },
 		event = "InsertEnter",
+	},
+	-- Typing exercises from neovim with stats
+	{
+		"nvzone/typr",
+		cmd = "TyprStats",
+		dependencies = "nvzone/volt",
+		opts = {},
 	},
 	--         'ThePrimeagen/git-worktree.nvim',
 })

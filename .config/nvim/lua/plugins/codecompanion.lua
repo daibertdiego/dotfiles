@@ -15,6 +15,11 @@ require("codecompanion").setup({
 	strategies = {
 		chat = {
 			adapter = "anthropic",
+			keymaps = {
+				send = {
+					modes = { n = "<C-Enter>", i = "<C-Enter>" },
+				},
+			},
 		},
 		inline = {
 			adapter = "anthropic",
