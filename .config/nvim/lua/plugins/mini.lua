@@ -1,4 +1,14 @@
-require("mini.animate").setup()
+require("mini.animate").setup({
+	-- Window open
+	open = {
+		enable = false,
+	},
+
+	-- Window close
+	close = {
+		enable = false,
+	},
+})
 require("mini.ai").setup()
 require("mini.pairs").setup()
 require("mini.splitjoin").setup()

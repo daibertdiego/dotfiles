@@ -19,6 +19,9 @@ require("codecompanion").setup({
 				send = {
 					modes = { n = "<C-Enter>", i = "<C-Enter>" },
 				},
+				close = {
+					modes = { n = "<C-c>", i = "<C-x>" },
+				},
 			},
 		},
 		inline = {

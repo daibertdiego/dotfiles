@@ -13,15 +13,37 @@ blink.setup({
 
 		["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 		["<C-e>"] = { "hide", "fallback" },
-
-		cmdline = {
-			preset = "enter",
-			["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-			["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+	},
+	cmdline = {
+		completion = {
+			ghost_text = { enabled = false },
+			menu = { auto_show = true },
 		},
+		keymap = {
+			-- recommended, as the default keymap will only show and select the next item
+			["<Tab>"] = { "show", "accept" },
+		},
+		-- keymap = {
+		-- 	preset = "enter",
+		-- 	["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+		-- 	["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+		-- },
+		sources = function()
+			local type = vim.fn.getcmdtype()
+			if type == "/" or type == "?" then
+				return { "buffer" }
+			end
+			if type == ":" then
+				return { "cmdline" }
+			end
+			return {}
+		end,
 	},
 	-- 'preselect', 'manual', 'auto_insert'
 	completion = {
+		ghost_text = {
+			enabled = false,
+		},
 		-- list = { selection = {auto_insert = true }},
 		list = { selection = {
 			preselect = function(ctx)
@@ -135,19 +157,20 @@ blink.setup({
 					local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
 					if trigger_pos then
 						for _, item in ipairs(items) do
-							item.textEdit = {
-								newText = item.insertText or item.label,
-								range = {
-									start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
-									["end"] = { line = vim.fn.line(".") - 1, character = col },
-								},
-							}
+							if not item.trigger_text_modified then
+								---@diagnostic disable-next-line: inject-field
+								item.trigger_text_modified = true
+								item.textEdit = {
+									newText = item.insertText or item.label,
+									range = {
+										start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
+										["end"] = { line = vim.fn.line(".") - 1, character = col },
+									},
+								}
+							end
 						end
 					end
-					-- Return only Snippets and ignore all the rest
-					return vim.tbl_filter(function(item)
-						return item.kind == require("blink.cmp.types").CompletionItemKind.Snippet
-					end, items)
+					return items
 				end,
 			},
 			-- Example on how to configure dadbod found in the main repo
@@ -172,18 +195,6 @@ blink.setup({
 				score_offset = 100,
 			},
 		},
-		-- command line completion, thanks to dpetka2001 in reddit
-		-- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-		cmdline = function()
-			local type = vim.fn.getcmdtype()
-			if type == "/" or type == "?" then
-				return { "buffer" }
-			end
-			if type == ":" then
-				return { "cmdline" }
-			end
-			return {}
-		end,
 	},
 })
 

@@ -27,6 +27,8 @@ require("hurl").setup({
 		next_panel = "<C-n>", -- Move to the next response popup window
 		prev_panel = "<C-p>", -- Move to the previous response popup window
 	},
+
+	-- file_root = ".",
 })
 
 -- Key mappings with vim.keymap.set

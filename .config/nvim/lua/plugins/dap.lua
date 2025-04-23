@@ -7,6 +7,8 @@ vim.fn.sign_define(
 	{ text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 )
 
+vim.fn.sign_define("DapStopped", { text = "➡", texthl = "Warning", linehl = "CursorLine", numhl = "" })
+
 -- Debugger
 vim.api.nvim_set_keymap(
 	"n",
@@ -67,89 +69,169 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = "Debug Run to cursor" }
 )
 
-local M = {}
-M.config = function()
-	local dap = require("dap")
-	local dapui = require("dapui")
+-- local M = {}
+-- M.config = function()
+local dap = require("dap")
+local dapui = require("dapui")
 
-	require("mason-nvim-dap").setup({
-		-- Makes a best effort to setup the various debuggers with
-		-- reasonable debug configurations
-		automatic_installation = true, -- FIX: Looks like this is not installing automatically the adapters. Use :Mason DAP instead.
+require("mason-nvim-dap").setup({
+	-- Makes a best effort to setup the various debuggers with
+	-- reasonable debug configurations
+	automatic_installation = true, -- FIX: Looks like this is not installing automatically the adapters. Use :Mason DAP instead.
 
-		-- You can provide additional configuration to the handlers,
-		-- see mason-nvim-dap README for more information
-		handlers = {},
+	-- You can provide additional configuration to the handlers,
+	-- see mason-nvim-dap README for more information
+	handlers = {},
 
-		-- You'll need to check that you have the required things installed
-		-- online, please don't ask me how to install them :)
-		ensure_installed = {
-			-- Update this to ensure that you have the debuggers for the langs you want
-			"delve", -- GO and C
-			"codelldb", -- Rust
-			"javadbg", -- java-debug-adapter
-			"javatest",
-			"mock",
-			"kotlin",
-			"js",
-			"chrome",
-			"firefox",
-			"python",
+	-- You'll need to check that you have the required things installed
+	-- online, please don't ask me how to install them :)
+	ensure_installed = {
+		-- Update this to ensure that you have the debuggers for the langs you want
+		"delve", -- GO and C
+		"codelldb", -- Rust
+		"javadbg", -- java-debug-adapter
+		"javatest",
+		"mock",
+		"kotlin",
+		"js",
+		"chrome",
+		"firefox",
+		"python",
+	},
+})
+
+-- Dap UI setup
+-- For more information, see |:help nvim-dap-ui|
+dapui.setup({
+	-- Set icons to characters that are more likely to work in every terminal.
+	--    Feel free to remove or use ones that you like more! :)
+	--    Don't feel like these are good choices.
+	icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
+	controls = {
+		icons = {
+			pause = "⏸",
+			play = "▶",
+			step_into = "⏎",
+			step_over = "⏭",
+			step_out = "⏮",
+			step_back = "b",
+			run_last = "▶▶",
+			terminate = "⏹",
+			disconnect = "⏏",
 		},
-	})
+	},
+})
 
-	-- Dap UI setup
-	-- For more information, see |:help nvim-dap-ui|
-	dapui.setup({
-		-- Set icons to characters that are more likely to work in every terminal.
-		--    Feel free to remove or use ones that you like more! :)
-		--    Don't feel like these are good choices.
-		icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-		controls = {
-			icons = {
-				pause = "⏸",
-				play = "▶",
-				step_into = "⏎",
-				step_over = "⏭",
-				step_out = "⏮",
-				step_back = "b",
-				run_last = "▶▶",
-				terminate = "⏹",
-				disconnect = "⏏",
-			},
-		},
-	})
+dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
-	dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-	dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-	dap.listeners.before.event_exited["dapui_config"] = dapui.close
+-- Install golang specific config
+require("dap-go").setup({
+	delve = {
+		-- On Windows delve must be run attached or it crashes.
+		-- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+		detached = vim.fn.has("win32") == 0,
+	},
+})
 
-	-- Install golang specific config
-	require("dap-go").setup({
-		delve = {
-			-- On Windows delve must be run attached or it crashes.
-			-- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-			detached = vim.fn.has("win32") == 0,
-		},
-	})
+dap.configurations.go = {
+	-- Default Go debug configs
+	{
+		type = "go",
+		name = "Attach",
+		mode = "local",
+		request = "attach",
+		processId = require("dap.utils").pick_process,
+	},
+	{
+		type = "go",
+		name = "Debug",
+		request = "launch",
+		program = "${file}",
+	},
+	{
+		type = "go",
+		name = "Debug (Arguments)",
+		request = "launch",
+		program = "${file}",
+		args = function()
+			local args_string = vim.fn.input("Arguments: ")
+			return vim.split(args_string, " ", true)
+		end,
+	},
+	{
+		type = "go",
+		name = "Debug (Arguments & Build Flags)",
+		request = "launch",
+		program = "${file}",
+		buildFlags = function()
+			return vim.fn.input("Build Flags: ")
+		end,
+		args = function()
+			local args_string = vim.fn.input("Arguments: ")
+			return vim.split(args_string, " ", true)
+		end,
+	},
+	{
+		type = "go",
+		name = "Debug Package",
+		request = "launch",
+		program = "${fileDirname}",
+	},
+	{
+		type = "go",
+		name = "Debug test",
+		request = "launch",
+		mode = "test",
+		program = "${file}",
+	},
+	{
+		type = "go",
+		name = "Debug test (go.mod)",
+		request = "launch",
+		mode = "test",
+		program = "./${relativeFileDirname}",
+	},
 
-	--Java debugger adapter settings
-	dap.configurations.java = {
-		-- {
-		-- 	name = "Debug (Attach) - Remote",
-		-- 	type = "java",
-		-- 	request = "attach",
-		-- 	hostName = "127.0.0.1",
-		-- 	port = 5005,
-		-- },
-		{
-			name = "Debug Cureent File",
-			type = "java",
-			request = "launch",
-			program = "${file}",
-		},
-	}
-end
+	-- Your custom fts5 debug configs
+	{
+		type = "go",
+		name = "Debug Go App (fts5 enabled)",
+		request = "launch",
+		mode = "exec",
+		program = "${file}",
+		buildFlags = "-tags=fts5",
+		args = {},
+	},
+	{
+		type = "go",
+		name = "Debug Go Test (fts5 enabled)",
+		request = "launch",
+		mode = "test",
+		program = "${fileDirname}",
+		buildFlags = "-tags=fts5",
+		args = {},
+	},
+}
+
+--Java debugger adapter settings
+dap.configurations.java = {
+	-- {
+	-- 	name = "Debug (Attach) - Remote",
+	-- 	type = "java",
+	-- 	request = "attach",
+	-- 	hostName = "127.0.0.1",
+	-- 	port = 5005,
+	-- },
+	{
+		name = "Debug Cureent File",
+		type = "java",
+		request = "launch",
+		program = "${file}",
+	},
+}
+-- end
 
 local dap = require("dap")
 dap.adapters.kotlin = {
@@ -193,4 +275,4 @@ dap.configurations.kotlin = {
 		timeout = 2000,
 	},
 }
-return M
+-- return M

@@ -9,11 +9,12 @@ vim.keymap.set("x", "p", [["_dP]], { noremap = true, desc = "Paste without repla
 vim.keymap.set("i", "<C-c>", "<Esc>", { noremap = true, desc = "Exit insert mode" })
 vim.keymap.set("n", "<C-c>", "<Esc>", { noremap = true, desc = "Exit insert mode" })
 
--- Buffers
+-- Buffer navigation and management
 vim.keymap.set("n", "<leader>bk", ":blast<CR>", { noremap = true, silent = true, desc = "Go to the last buffer" })
 vim.keymap.set("n", "<leader>bj", ":bfirst<CR>", { noremap = true, silent = true, desc = "Go to the first buffer" })
 vim.keymap.set("n", "<leader>bb", ":bprev<CR>", { noremap = true, silent = true, desc = "Go to the previous buffer" })
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { noremap = true, silent = true, desc = "Go to the next buffer" })
+vim.keymap.set("n", "<C-b>", ":b#<CR>", { noremap = true, silent = true, desc = "Go to the last active buffer" })
 vim.keymap.set(
 	"n",
 	"<leader>bd",
@@ -26,6 +27,12 @@ vim.keymap.set(
 	":bdelete!<CR>",
 	{ noremap = true, silent = true, desc = "Delete the current buffer" }
 )
+vim.keymap.set(
+	"n",
+	"<leader>bx",
+	":BufferLineCloseOthers<CR>",
+	{ noremap = true, silent = true, desc = "Close all buffers except the current one" }
+)
 vim.keymap.set("n", "<leader>q", ":bdelete<CR>", { noremap = true, silent = true, desc = "Delete the current buffer" })
 
 vim.keymap.set("n", "<leader>q", function()
@@ -36,13 +43,6 @@ vim.keymap.set("n", "<leader>q", function()
 		vim.cmd("copen")
 	end
 end, { noremap = true, silent = true, desc = "Toggle Quickfix List" })
-
-vim.keymap.set(
-	"n",
-	"<leader>bx",
-	"<C-w>o",
-	{ noremap = true, silent = true, desc = "Close all windows except the current one" }
-)
 
 -- Window navigation
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -164,9 +164,9 @@ end, { desc = "Edit Neovim config" })
 
 -- Reload Neovim config
 vim.keymap.set("n", "<leader>nr", function()
-	vim.cmd("source " .. vim.fn.stdpath("config") .. "/init.lua")
+	dofile(vim.fn.stdpath("config") .. "/init.lua")
 	print("Config reloaded!")
-end, { desc = "Source Neovim config" })
+end, { desc = "Reload Neovim config" })
 
 -- Open plugin configuration
 vim.keymap.set("n", "<leader>np", function()

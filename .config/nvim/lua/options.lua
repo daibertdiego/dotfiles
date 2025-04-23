@@ -5,6 +5,9 @@
 -- vim.g.dap_log_level = 3 -- Debug level logging
 -- vim.g.dap_log_to_file = true -- Log to file
 
+-- Try to remove issues when editing sql files.
+vim.g.omni_sql_no_default_maps = 1
+
 vim.opt.mousescroll = "ver:1,hor:1"
 vim.opt.expandtab = true -- convert tabs to spces
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
@@ -45,6 +48,7 @@ vim.o.smartcase = true
 
 -- Enable speel check
 vim.opt.spell = true
+vim.opt.spelllang = { "en_us", "pt_br" }
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -93,7 +97,6 @@ vim.opt.cursorline = true
 -- Removes ~ by replacing it with a blank space
 vim.opt.fillchars = { eob = " " }
 
--- lvim.transparent_window = true -- enable/disable transparency
 -- -- vim.lsp.set_log_level "error"
 -- lvim.log.level = "warn"
 -- vim.opt.relativenumber = true --relative line numbers

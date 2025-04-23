@@ -212,6 +212,10 @@ require("lazy").setup({
 	-- Git related plugins
 	"lewis6991/gitsigns.nvim",
 	{
+		"tpope/vim-fugitive",
+		cmd = { "Git", "Gdiffsplit", "Gread", "Gwrite", "Gstatus" }, -- lazy load
+	},
+	{
 		"NeogitOrg/neogit",
 		lazy = false,
 		dependencies = {
@@ -301,6 +305,10 @@ require("lazy").setup({
 			},
 		},
 	},
+	-- Easy align for sql statements.
+	{
+		"junegunn/vim-easy-align",
+	},
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
@@ -342,6 +350,16 @@ require("lazy").setup({
 		"mrcjkb/rustaceanvim", -- Rust support for run and debug code.
 		version = "^5", -- Recommended
 		lazy = false, -- This plugin is already lazy
+	},
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"mfussenegger/nvim-dap",
+		},
+		config = function()
+			require("mason-nvim-dap").setup()
+		end,
 	},
 	"mfussenegger/nvim-jdtls", -- Java Language Server and Debug adapter.
 	{
@@ -401,5 +419,4 @@ require("lazy").setup({
 		dependencies = "nvzone/volt",
 		opts = {},
 	},
-	--         'ThePrimeagen/git-worktree.nvim',
 })

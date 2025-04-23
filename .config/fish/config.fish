@@ -139,6 +139,10 @@ function load_api_keys
     set -gx ANTHROPIC_API_KEY (cat $ANTHROPIC_API_CACHE)
 end
 
+function aws_profile
+    set -gx AWS_PROFILE (aws configure list-profiles | fzf)
+    echo "Switched to AWS Profile: $AWS_PROFILE"
+end
 
 # List windows being used from Aerospace
 function ff

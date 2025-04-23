@@ -50,12 +50,19 @@ vim.keymap.set("n", "<leader>s/", function()
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
 vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
--- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
 vim.keymap.set("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
 vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
 vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
 vim.keymap.set("n", "<leader>sb", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
-vim.keymap.set("n", "<leader>sS", require("telescope.builtin").git_status, { desc = "" })
+vim.keymap.set("n", "<leader>sc", function()
+	require("telescope.builtin").find_files({
+		prompt_title = "[S]earch .[C]onfig Files",
+		cwd = vim.fn.expand("~/.config"),
+		hidden = true, -- Include hidden files
+	})
+end, { desc = "[ ] Find files in .config" })
+vim.keymap.set("n", "<leader>sS", require("telescope.builtin").git_status, { desc = "[S]earch Git [S]tatus" })
 vim.keymap.set("n", "<leader>sm", ":Telescope harpoon marks<CR>", { desc = "Harpoon [M]arks" })
 vim.keymap.set("n", "<Leader>sr", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
 vim.keymap.set(
