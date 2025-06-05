@@ -1,5 +1,6 @@
 -- require('telescope').load_extension('harpoon')
 require("telescope").load_extension("git_worktree")
+local actions = require("telescope.actions")
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -24,9 +25,44 @@ require("telescope").setup({
 			i = {
 				["<C-u>"] = false,
 				["<C-d>"] = false,
-				["<C-j>"] = require("telescope.actions").move_selection_next,
-				["<C-k>"] = require("telescope.actions").move_selection_previous,
-				["<C-d>"] = require("telescope.actions").move_selection_previous,
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+				["<Tab>"] = actions.toggle_selection + actions.move_selection_next,
+				["<S-Tab>"] = actions.toggle_selection + actions.move_selection_previous,
+				["<CR>"] = actions.select_default,
+				["<C-CR>"] = function(prompt_bufnr)
+					local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+					local selections = picker:get_multi_selection()
+					if #selections == 0 then
+						actions.select_default(prompt_bufnr)
+					else
+						for _, entry in ipairs(selections) do
+							vim.cmd("badd " .. vim.fn.fnameescape(entry.filename or entry.value))
+						end
+						actions.close(prompt_bufnr)
+						vim.cmd("buffer " .. vim.fn.fnameescape(selections[1].filename or selections[1].value))
+					end
+				end,
+			},
+			n = {
+				["<C-j>"] = actions.move_selection_next,
+				["<C-k>"] = actions.move_selection_previous,
+				["<Tab>"] = actions.toggle_selection + actions.move_selection_next,
+				["<S-Tab>"] = actions.toggle_selection + actions.move_selection_previous,
+				["<CR>"] = actions.select_default,
+				["<C-CR>"] = function(prompt_bufnr)
+					local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+					local selections = picker:get_multi_selection()
+					if #selections == 0 then
+						actions.select_default(prompt_bufnr)
+					else
+						for _, entry in ipairs(selections) do
+							vim.cmd("badd " .. vim.fn.fnameescape(entry.filename or entry.value))
+						end
+						actions.close(prompt_bufnr)
+						vim.cmd("buffer " .. vim.fn.fnameescape(selections[1].filename or selections[1].value))
+					end
+				end,
 			},
 		},
 	},

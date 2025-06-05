@@ -63,6 +63,7 @@ local servers = {
 	"tailwindcss",
 	"kotlin_language_server",
 	"typos_lsp",
+	"bashls",
 }
 
 -- Ensure servers are installed
@@ -75,10 +76,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("blink.cmp").get_lsp_capabilities()
 
 local signs = { Error = icons.Error, Warn = icons.Warning, Hint = icons.Hint, Info = icons.Information }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = signs.Error,
+			[vim.diagnostic.severity.WARN] = signs.Warn,
+			[vim.diagnostic.severity.INFO] = signs.Info,
+			[vim.diagnostic.severity.HINT] = signs.Hint,
+		},
+	},
+})
 
 -- Setup LSP for all servers
 for _, lsp in ipairs(servers) do
@@ -221,4 +229,23 @@ vim.api.nvim_create_autocmd("FileType", {
 local lsp = vim.lsp
 lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 	border = "rounded",
+})
+
+-- Ensure <CR> in quickfix jumps to entry in main buffer
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "qf",
+	callback = function()
+		vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", {
+			buffer = true,
+			desc = "Jump to quickfix entry and close quickfix window",
+		})
+		vim.keymap.set("n", "t", ":cc<CR>:tabnew<CR>", {
+			buffer = true,
+			desc = "Open in new tab",
+		})
+		vim.keymap.set("n", "v", ":cc<CR>:vsplit<CR>", {
+			buffer = true,
+			desc = "Open in vertical split",
+		})
+	end,
 })

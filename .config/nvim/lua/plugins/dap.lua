@@ -1,20 +1,22 @@
-require("dapui").setup()
-require("dap-go").setup()
-
 require("nvim-dap-virtual-text").setup()
 vim.fn.sign_define(
 	"DapBreakpoint",
 	{ text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
 )
 
-vim.fn.sign_define("DapStopped", { text = "➡", texthl = "Warning", linehl = "CursorLine", numhl = "" })
+vim.fn.sign_define("DapStopped", {
+	text = "▶️",
+	texthl = "DiagnosticSignWarn",
+	linehl = "Visual",
+	numhl = "DiagnosticSignWarn",
+})
 
 -- Debugger
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>dt",
-	":DapUiToggle<CR>",
-	{ noremap = true, silent = true, desc = "Debug toogle UI" }
+	":DapViewToggle<CR>",
+	{ noremap = true, silent = true, desc = "Debug toggle UI" }
 )
 vim.api.nvim_set_keymap(
 	"n",
@@ -29,21 +31,17 @@ vim.api.nvim_set_keymap("n", "<leader>ds", ":DapContinue<CR>", { noremap = true,
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>dc",
-	":DapStop<CR>",
-	{ noremap = true, silent = true, desc = "Debut Cancel/Close" }
+	":DapTerminate<CR>",
+	{ noremap = true, silent = true, desc = "Debug Cancel/Close" }
 )
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>de",
-	"<cmd>lua require('dapui').eval()<cr><cmd>lua require('dapui').eval()<cr>",
-	{ noremap = true, silent = true, desc = "Eval" }
-)
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>dr",
-	":lua require('dapui').open({reset = true})<CR>",
-	{ noremap = true, silent = true, desc = "Debug reset" }
-)
+vim.keymap.set("n", "<leader>de", function()
+	local word = vim.fn.expand("<cword>")
+	if word and word ~= "" then
+		vim.cmd("DapViewWatch " .. word)
+	end
+end, { noremap = true, silent = true, desc = "Add word under cursor to dap-view watch list" })
+
+vim.api.nvim_set_keymap("n", "<leader>dr", ":DapViewOpen<CR>", { noremap = true, silent = true, desc = "Debug reset" })
 vim.api.nvim_set_keymap(
 	"n",
 	"<F5>",
@@ -72,71 +70,130 @@ vim.api.nvim_set_keymap(
 -- local M = {}
 -- M.config = function()
 local dap = require("dap")
-local dapui = require("dapui")
-
-require("mason-nvim-dap").setup({
-	-- Makes a best effort to setup the various debuggers with
-	-- reasonable debug configurations
-	automatic_installation = true, -- FIX: Looks like this is not installing automatically the adapters. Use :Mason DAP instead.
-
-	-- You can provide additional configuration to the handlers,
-	-- see mason-nvim-dap README for more information
-	handlers = {},
-
-	-- You'll need to check that you have the required things installed
-	-- online, please don't ask me how to install them :)
-	ensure_installed = {
-		-- Update this to ensure that you have the debuggers for the langs you want
-		"delve", -- GO and C
-		"codelldb", -- Rust
-		"javadbg", -- java-debug-adapter
-		"javatest",
-		"mock",
-		"kotlin",
-		"js",
-		"chrome",
-		"firefox",
-		"python",
+local dapview = require("dap-view")
+dapview.setup({
+	windows = {
+		terminal = {
+			-- Use the actual names for the adapters you want to hide
+			hide = { "go" }, -- `go` is known to not use the terminal.
+		},
 	},
-})
-
--- Dap UI setup
--- For more information, see |:help nvim-dap-ui|
-dapui.setup({
-	-- Set icons to characters that are more likely to work in every terminal.
-	--    Feel free to remove or use ones that you like more! :)
-	--    Don't feel like these are good choices.
-	icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-	controls = {
-		icons = {
-			pause = "⏸",
-			play = "▶",
-			step_into = "⏎",
-			step_over = "⏭",
-			step_out = "⏮",
-			step_back = "b",
-			run_last = "▶▶",
-			terminate = "⏹",
-			disconnect = "⏏",
+	winbar = {
+		controls = {
+			enabled = false,
+			position = "right",
+			buttons = {
+				"play",
+				"step_into",
+				"step_over",
+				"step_out",
+				"step_back",
+				"run_last",
+				"terminate",
+				"disconnect",
+			},
+			custom_buttons = {},
+			icons = {
+				pause = "",
+				play = "",
+				step_into = "",
+				step_over = "",
+				step_out = "",
+				step_back = "",
+				run_last = "",
+				terminate = "",
+				disconnect = "",
+			},
 		},
 	},
 })
-
-dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-dap.listeners.before.event_exited["dapui_config"] = dapui.close
-
 -- Install golang specific config
 require("dap-go").setup({
 	delve = {
+		path = "/Users/daibertdiego/go/bin/dlv",
 		-- On Windows delve must be run attached or it crashes.
 		-- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
 		detached = vim.fn.has("win32") == 0,
 	},
 })
 
+-- require("mason-nvim-dap").setup({
+-- 	-- Makes a best effort to setup the various debuggers with
+-- 	-- reasonable debug configurations
+-- 	automatic_installation = true, -- FIX: Looks like this is not installing automatically the adapters. Use :Mason DAP instead.
+--
+-- 	-- You can provide additional configuration to the handlers,
+-- 	-- see mason-nvim-dap README for more information
+-- 	handlers = {},
+--
+-- 	-- You'll need to check that you have the required things installed
+-- 	-- online, please don't ask me how to install them :)
+-- 	ensure_installed = {
+-- 		-- Update this to ensure that you have the debuggers for the langs you want
+-- 		"delve", -- GO and C
+-- 		"codelldb", -- Rust
+-- 		"javadbg", -- java-debug-adapter
+-- 		"javatest",
+-- 		"mock",
+-- 		"kotlin",
+-- 		"js",
+-- 		"chrome",
+-- 		"firefox",
+-- 		"python",
+-- 	},
+-- })
+
+-- Auto-open dap-view when debugging starts/stops (replaces dapui listeners)
+dapview.setup()
+dap.listeners.before.attach.dapui_config = function()
+	dapview.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+	dapview.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+	dapview.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+	dapview.close()
+end
+
+-- Check current debug status
+vim.keymap.set("n", "<leader>dstatus", function()
+	local session = require("dap").session()
+	if session then
+		if session.stopped_thread_id then
+			print("STOPPED at breakpoint - ready for step commands")
+			print("Use F7=step_into, F8=step_over, F9=run_to_cursor")
+		else
+			print("Running - not stopped")
+		end
+	else
+		print("No debug session")
+	end
+end, { desc = "Check debug status" })
+
+-- dap.adapters.go = function(callback, config)
+-- 	if config.mode == "remote" and config.request == "attach" then
+-- 		callback({
+-- 			type = "server",
+-- 			host = config.host or "127.0.0.1",
+-- 			port = config.port or "38697",
+-- 		})
+-- 	else
+-- 		callback({
+-- 			type = "server",
+-- 			port = "${port}",
+-- 			executable = {
+-- 				command = "dlv",
+-- 				args = { "dap", "-l", "127.0.0.1:${port}", "--log", "--log-output=dap" },
+-- 				detached = vim.fn.has("win32") == 0,
+-- 			},
+-- 		})
+-- 	end
+-- end
+--
 dap.configurations.go = {
-	-- Default Go debug configs
 	{
 		type = "go",
 		name = "Attach",
@@ -146,7 +203,7 @@ dap.configurations.go = {
 	},
 	{
 		type = "go",
-		name = "Debug",
+		name = "Debug Current File",
 		request = "launch",
 		program = "${file}",
 	},
@@ -193,7 +250,6 @@ dap.configurations.go = {
 		mode = "test",
 		program = "./${relativeFileDirname}",
 	},
-
 	-- Your custom fts5 debug configs
 	{
 		type = "go",
@@ -275,4 +331,6 @@ dap.configurations.kotlin = {
 		timeout = 2000,
 	},
 }
--- return M
+
+---- Add this to see debug output
+require("dap").set_log_level("DEBUG")

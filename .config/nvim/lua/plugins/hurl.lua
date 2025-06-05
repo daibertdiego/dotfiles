@@ -1,7 +1,7 @@
 require("hurl").setup({
 	ft = "hurl",
 	-- Show debugging info
-	debug = false,
+	debug = true,
 	-- Show notification on run
 	show_notification = false,
 	-- Show response in popup or split
@@ -42,11 +42,3 @@ vim.keymap.set("n", "<leader>tV", "<cmd>HurlVeryVerbose<CR>", { desc = "Run API 
 
 -- For visual mode keymap
 vim.keymap.set("v", "<leader>a", ":HurlRunner<CR>", { desc = "Hurl Runner" })
-
--- Create an autocommand for .hurl files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.hurl", -- Match all files with the .hurl extension
-	callback = function()
-		vim.bo.filetype = "sh" -- Set the filetype to 'sh'
-	end,
-})

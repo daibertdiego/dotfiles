@@ -337,6 +337,7 @@ require("lazy").setup({
 		opts_extend = { "sources.default" },
 		event = { "InsertEnter" },
 	},
+	{ "augmentcode/augment.vim" },
 	{
 		"folke/which-key.nvim",
 		config = function()
@@ -352,22 +353,17 @@ require("lazy").setup({
 		lazy = false, -- This plugin is already lazy
 	},
 	{
-		"jay-babu/mason-nvim-dap.nvim",
+		"mfussenegger/nvim-dap",
 		dependencies = {
-			"williamboman/mason.nvim",
-			"mfussenegger/nvim-dap",
+			{
+				"igorlfs/nvim-dap-view",
+			},
+			"leoluz/nvim-dap-go",
+			"theHamsta/nvim-dap-virtual-text",
 		},
-		config = function()
-			require("mason-nvim-dap").setup()
-		end,
 	},
 	"mfussenegger/nvim-jdtls", -- Java Language Server and Debug adapter.
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
-	},
 	"theHamsta/nvim-dap-virtual-text",
-	"leoluz/nvim-dap-go",
 	{
 		"jellydn/hurl.nvim",
 		dependencies = {
@@ -418,5 +414,20 @@ require("lazy").setup({
 		cmd = "TyprStats",
 		dependencies = "nvzone/volt",
 		opts = {},
+	},
+	{
+		"m4xshen/hardtime.nvim",
+		lazy = false,
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {
+			disable_mouse = false,
+		},
+	},
+	{
+		"tris203/precognition.nvim",
+		lazy = false,
+		opts = {
+			startVisible = false,
+		},
 	},
 })

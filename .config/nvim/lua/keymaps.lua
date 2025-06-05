@@ -54,7 +54,14 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "QQ", ":q!<CR>", { noremap = true, silent = true, desc = "Quit without saving" })
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { noremap = true, silent = true, desc = "Save file" })
 vim.keymap.set("n", "TT", ":TransparentToggle<CR>", { noremap = true, desc = "Toggle transparency" })
-vim.keymap.set("n", "<CR>", ":noh<CR>", { noremap = true, silent = true, desc = "Clear search highlights" })
+-- Clear search highlights if active, otherwise jump to beginning of next line
+vim.keymap.set("n", "<CR>", function()
+	if vim.v.hlsearch == 1 then
+		vim.cmd("nohlsearch")
+	else
+		vim.cmd("normal! j^") -- Go down one line and to the beginning
+	end
+end, { desc = "Clear search highlights or jump to next line start" })
 
 -- Splits
 vim.keymap.set("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true, desc = "Decrease vertical window size" })
