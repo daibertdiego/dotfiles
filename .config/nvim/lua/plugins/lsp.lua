@@ -30,7 +30,6 @@ vim.diagnostic.config({
 })
 
 -- Global diagnostic keymaps
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Diagnostic float" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostic loclist" })
 
 -- Define LSP keymaps

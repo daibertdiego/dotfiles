@@ -151,25 +151,29 @@ dashboard.setup({
 		-- packages = { enable = true },
 		center = {
 			{
-				icon = "󰮗  ", -- You can use any icon you like
+				icon = "🔍 ", -- Alternative: "📁 " or " "
 				desc = "Find Files                ",
-				action = "Telescope find_files",
+				action = function()
+					Snacks.picker.files()
+				end,
 				key = "f",
 			},
 			{
-				icon = "  ",
+				icon = "📄 ", -- Alternative: "🕐 " or " "
 				desc = "Find Recent Files          ",
-				action = "Telescope oldfiles",
+				action = function()
+					Snacks.picker.recent()
+				end,
 				key = "r",
 			},
 			{
-				icon = "  ",
+				icon = "⚙️ ", -- Alternative: "🔧 " or " "
 				desc = "Open Config                ",
 				action = "edit ~/.config/nvim/init.lua",
 				key = "c",
 			},
 			{
-				icon = "󰩈  ",
+				icon = "❌ ", -- Alternative: "👋 " or " "
 				desc = "Quit Neovim                ",
 				action = "qa",
 				key = "q",
