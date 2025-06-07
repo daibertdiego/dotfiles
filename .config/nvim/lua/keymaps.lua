@@ -54,14 +54,19 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "QQ", ":q!<CR>", { noremap = true, silent = true, desc = "Quit without saving" })
 vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { noremap = true, silent = true, desc = "Save file" })
 vim.keymap.set("n", "TT", ":TransparentToggle<CR>", { noremap = true, desc = "Toggle transparency" })
--- Clear search highlights if active, otherwise jump to beginning of next line
+
+-- Clear search highlights if active, otherwise handle context-specific behavior
 vim.keymap.set("n", "<CR>", function()
-	if vim.v.hlsearch == 1 then
+	-- Check if we're in a quickfix window
+	if vim.bo.buftype == "quickfix" then
+		vim.cmd(".cc") -- Jump to item under cursor
+		vim.cmd("cclose") -- Close quickfix window
+	elseif vim.v.hlsearch == 1 then
 		vim.cmd("nohlsearch")
 	else
 		vim.cmd("normal! j^") -- Go down one line and to the beginning
 	end
-end, { desc = "Clear search highlights or jump to next line start" })
+end, { desc = "Clear search highlights, quickfix select, or jump to next line start" })
 
 -- Splits
 vim.keymap.set("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true, desc = "Decrease vertical window size" })
@@ -73,28 +78,19 @@ vim.keymap.set("x", "K", ":m '<-3<CR>gv=gv", { noremap = true, silent = true, de
 
 -- Navigation
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and restore cursor" })
--- Disabling this for mini.animate conflicts
--- vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
--- vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
--- vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true, desc = "Next search and center" })
--- vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true, desc = "Previous search and center" })
--- vim.keymap.set("n", "*", "*zz", { noremap = true, silent = true, desc = "Next occurrence and center" })
--- vim.keymap.set("n", "#", "#zz", { noremap = true, silent = true, desc = "Previous occurrence and center" })
--- vim.keymap.set("n", "g*", "g*zz", { noremap = true, silent = true, desc = "Next partial match and center" })
--- vim.keymap.set("n", "g#", "g#zz", { noremap = true, silent = true, desc = "Previous partial match and center" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true, desc = "Next search and center" })
+vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true, desc = "Previous search and center" })
+vim.keymap.set("n", "*", "*zz", { noremap = true, silent = true, desc = "Next occurrence and center" })
+vim.keymap.set("n", "#", "#zz", { noremap = true, silent = true, desc = "Previous occurrence and center" })
+vim.keymap.set("n", "g*", "g*zz", { noremap = true, silent = true, desc = "Next partial match and center" })
+vim.keymap.set("n", "g#", "g#zz", { noremap = true, silent = true, desc = "Previous partial match and center" })
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Disable space key" })
 
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Up with wrap handling" })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Down with wrap handling" })
-
--- -- Noice
--- vim.keymap.set(
--- 	"n",
--- 	"<space><space>",
--- 	":Noice dismiss<CR>",
--- 	{ noremap = true, silent = true, desc = "Dismiss Noice notifications" }
--- )
 
 -- Search and replace
 vim.keymap.set(
