@@ -1,3 +1,21 @@
+-- Source Copilot
+-- copilot = {
+-- 	name = "copilot",
+-- 	module = "blink-cmp-copilot",
+-- 	score_offset = 100,
+-- 	async = true,
+-- 	min_keyword_length = 6,
+-- 	transform_items = function(_, items)
+-- 		local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+-- 		local kind_idx = #CompletionItemKind + 1
+-- 		CompletionItemKind[kind_idx] = "Copilot"
+-- 		for _, item in ipairs(items) do
+-- 			item.kind = kind_idx
+-- 		end
+-- 		return items
+-- 	end,
+-- },
+
 local blink = require("blink.cmp")
 local icons = require("lib.icons")
 -- NOTE: Specify the trigger character(s) used for luasnip
@@ -85,7 +103,7 @@ blink.setup({
 		kind_icons = icons.kind,
 	},
 	sources = {
-		default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji" },
+		default = { "lazydev", "lsp", "path", "snippets", "buffer", "dadbod", "emoji" },
 		providers = {
 			lsp = {
 				name = "Lsp",
@@ -117,22 +135,6 @@ blink.setup({
 				module = "blink.cmp.sources.buffer",
 				min_keyword_length = 4,
 				score_offset = 15, -- the higher the number, the higher the priority
-			},
-			copilot = {
-				name = "copilot",
-				module = "blink-cmp-copilot",
-				score_offset = 100,
-				async = true,
-				min_keyword_length = 6,
-				transform_items = function(_, items)
-					local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-					local kind_idx = #CompletionItemKind + 1
-					CompletionItemKind[kind_idx] = "Copilot"
-					for _, item in ipairs(items) do
-						item.kind = kind_idx
-					end
-					return items
-				end,
 			},
 			snippets = {
 				name = "Snippets",

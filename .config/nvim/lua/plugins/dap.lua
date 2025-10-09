@@ -78,34 +78,6 @@ dapview.setup({
 			hide = { "go" }, -- `go` is known to not use the terminal.
 		},
 	},
-	winbar = {
-		controls = {
-			enabled = false,
-			position = "right",
-			buttons = {
-				"play",
-				"step_into",
-				"step_over",
-				"step_out",
-				"step_back",
-				"run_last",
-				"terminate",
-				"disconnect",
-			},
-			custom_buttons = {},
-			icons = {
-				pause = "",
-				play = "",
-				step_into = "",
-				step_over = "",
-				step_out = "",
-				step_back = "",
-				run_last = "",
-				terminate = "",
-				disconnect = "",
-			},
-		},
-	},
 })
 -- Install golang specific config
 require("dap-go").setup({
@@ -334,3 +306,9 @@ dap.configurations.kotlin = {
 
 ---- Add this to see debug output
 require("dap").set_log_level("DEBUG")
+
+-- Disable DAP auto-discovery for JDTLS (prevents duplicate server)
+local dap = require("dap")
+if dap.providers and dap.providers.configs then
+	dap.providers.configs["jdtls"] = nil
+end

@@ -1,0 +1,21 @@
+{
+  "name": "spring-boot-snippets",
+  "version": "1.0.0",
+  "description": "Spring Boot application.properties snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "properties",
+        "path": "./properties.json"
+      },
+      {
+        "language": "javaProperties",
+        "path": "./properties.json"
+      },
+      {
+        "language": "jproperties",
+        "path": "./properties.json"
+      }
+    ]
+  }
+}

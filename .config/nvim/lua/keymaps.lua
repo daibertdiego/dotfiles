@@ -77,15 +77,15 @@ vim.keymap.set("x", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, de
 vim.keymap.set("x", "K", ":m '<-3<CR>gv=gv", { noremap = true, silent = true, desc = "Move block up" })
 
 -- Navigation
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and restore cursor" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
-vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true, desc = "Next search and center" })
-vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true, desc = "Previous search and center" })
-vim.keymap.set("n", "*", "*zz", { noremap = true, silent = true, desc = "Next occurrence and center" })
-vim.keymap.set("n", "#", "#zz", { noremap = true, silent = true, desc = "Previous occurrence and center" })
-vim.keymap.set("n", "g*", "g*zz", { noremap = true, silent = true, desc = "Next partial match and center" })
-vim.keymap.set("n", "g#", "g#zz", { noremap = true, silent = true, desc = "Previous partial match and center" })
+-- vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and restore cursor" })
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+-- vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true, desc = "Next search and center" })
+-- vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true, desc = "Previous search and center" })
+-- vim.keymap.set("n", "*", "*zz", { noremap = true, silent = true, desc = "Next occurrence and center" })
+-- vim.keymap.set("n", "#", "#zz", { noremap = true, silent = true, desc = "Previous occurrence and center" })
+-- vim.keymap.set("n", "g*", "g*zz", { noremap = true, silent = true, desc = "Next partial match and center" })
+-- vim.keymap.set("n", "g#", "g#zz", { noremap = true, silent = true, desc = "Previous partial match and center" })
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true, desc = "Disable space key" })
 
 -- Remap for dealing with word wrap

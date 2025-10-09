@@ -17,8 +17,20 @@ return {
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
 		-- Picker configuration
-		picker = {},
-		explorer = {},
+		picker = {
+			win = {
+				style = "nvim",
+			},
+			sources = {
+				explorer = {
+					layout = { preset = "default", preview = true },
+					auto_close = true,
+				},
+			},
+		},
+		explorer = {
+			auto_close = true,
+		},
 		-- terminal = {
 		-- 	win = {
 		-- 		position = "float",
@@ -105,7 +117,7 @@ return {
 		{
 			"<leader>sf",
 			function()
-				Snacks.picker.files()
+				Snacks.picker.files({ cwd = vim.fn.getcwd() })
 			end,
 			desc = "[S]earch [F]iles",
 		},

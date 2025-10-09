@@ -1,0 +1,522 @@
+{
+  "Spring Application Name": {
+    "prefix": "spring.application.name",
+    "body": "spring.application.name=${1:myapp}",
+    "description": "Name of the Spring Boot application"
+  },
+  "Spring Profiles Active": {
+    "prefix": "spring.profiles.active",
+    "body": "spring.profiles.active=${1:dev}",
+    "description": "Active Spring profiles (comma-separated)"
+  },
+  "Server Port": {
+    "prefix": "server.port",
+    "body": "server.port=${1:8080}",
+    "description": "HTTP server port"
+  },
+  "Server Context Path": {
+    "prefix": "server.servlet.context-path",
+    "body": "server.servlet.context-path=${1:/api}",
+    "description": "Context path of the application"
+  },
+  "Datasource URL": {
+    "prefix": "spring.datasource.url",
+    "body": "spring.datasource.url=jdbc:${1|postgresql,mysql,h2,oracle|}://${2:localhost}/${3:database}",
+    "description": "JDBC URL for database connection"
+  },
+  "Datasource Username": {
+    "prefix": "spring.datasource.username",
+    "body": "spring.datasource.username=${1:username}",
+    "description": "Database username"
+  },
+  "Datasource Password": {
+    "prefix": "spring.datasource.password",
+    "body": "spring.datasource.password=${1:password}",
+    "description": "Database password"
+  },
+  "Datasource Driver": {
+    "prefix": "spring.datasource.driver-class-name",
+    "body": "spring.datasource.driver-class-name=${1|org.postgresql.Driver,com.mysql.cj.jdbc.Driver,org.h2.Driver,oracle.jdbc.OracleDriver|}",
+    "description": "JDBC driver class name"
+  },
+  "JPA DDL Auto": {
+    "prefix": "spring.jpa.hibernate.ddl-auto",
+    "body": "spring.jpa.hibernate.ddl-auto=${1|none,validate,update,create,create-drop|}",
+    "description": "Database schema generation strategy"
+  },
+  "JPA Show SQL": {
+    "prefix": "spring.jpa.show-sql",
+    "body": "spring.jpa.show-sql=${1|true,false|}",
+    "description": "Log SQL statements to console"
+  },
+  "JPA Format SQL": {
+    "prefix": "spring.jpa.properties.hibernate.format_sql",
+    "body": "spring.jpa.properties.hibernate.format_sql=${1|true,false|}",
+    "description": "Format SQL statements in logs"
+  },
+  "Hibernate Dialect": {
+    "prefix": "spring.jpa.properties.hibernate.dialect",
+    "body": "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.${1|PostgreSQLDialect,MySQL8Dialect,H2Dialect,Oracle12cDialect|}",
+    "description": "Hibernate database dialect"
+  },
+  "SQL Init Mode": {
+    "prefix": "spring.sql.init.mode",
+    "body": "spring.sql.init.mode=${1|always,never,embedded|}",
+    "description": "SQL initialization mode"
+  },
+  "Logging Level Root": {
+    "prefix": "logging.level.root",
+    "body": "logging.level.root=${1|INFO,DEBUG,WARN,ERROR,TRACE|}",
+    "description": "Root logging level"
+  },
+  "Logging Level Package": {
+    "prefix": "logging.level",
+    "body": "logging.level.${1:com.example}=${2|DEBUG,INFO,WARN,ERROR,TRACE|}",
+    "description": "Logging level for specific package"
+  },
+  "Logging File Name": {
+    "prefix": "logging.file.name",
+    "body": "logging.file.name=${1:logs/application.log}",
+    "description": "Log file path and name"
+  },
+  "Logging Pattern Console": {
+    "prefix": "logging.pattern.console",
+    "body": "logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n",
+    "description": "Console logging pattern"
+  },
+  "Management Endpoints Exposure": {
+    "prefix": "management.endpoints.web.exposure.include",
+    "body": "management.endpoints.web.exposure.include=${1|*,health\\,info,health|}",
+    "description": "Exposed actuator endpoints"
+  },
+  "Management Health Show Details": {
+    "prefix": "management.endpoint.health.show-details",
+    "body": "management.endpoint.health.show-details=${1|always,when-authorized,never|}",
+    "description": "Health endpoint detail visibility"
+  },
+  "Management Server Port": {
+    "prefix": "management.server.port",
+    "body": "management.server.port=${1:9090}",
+    "description": "Actuator management port"
+  },
+  "Security User Name": {
+    "prefix": "spring.security.user.name",
+    "body": "spring.security.user.name=${1:admin}",
+    "description": "Default security username"
+  },
+  "Security User Password": {
+    "prefix": "spring.security.user.password",
+    "body": "spring.security.user.password=${1:password}",
+    "description": "Default security password"
+  },
+  "DevTools Restart Enabled": {
+    "prefix": "spring.devtools.restart.enabled",
+    "body": "spring.devtools.restart.enabled=${1|true,false|}",
+    "description": "Enable automatic restart on changes"
+  },
+  "DevTools LiveReload": {
+    "prefix": "spring.devtools.livereload.enabled",
+    "body": "spring.devtools.livereload.enabled=${1|true,false|}",
+    "description": "Enable LiveReload server"
+  },
+  "Jackson Date Format": {
+    "prefix": "spring.jackson.date-format",
+    "body": "spring.jackson.date-format=${1:yyyy-MM-dd HH:mm:ss}",
+    "description": "Jackson date serialization format"
+  },
+  "Jackson Time Zone": {
+    "prefix": "spring.jackson.time-zone",
+    "body": "spring.jackson.time-zone=${1:UTC}",
+    "description": "Jackson time zone"
+  },
+  "Thymeleaf Cache": {
+    "prefix": "spring.thymeleaf.cache",
+    "body": "spring.thymeleaf.cache=${1|false,true|}",
+    "description": "Enable Thymeleaf template caching"
+  },
+  "Servlet Multipart Max File Size": {
+    "prefix": "spring.servlet.multipart.max-file-size",
+    "body": "spring.servlet.multipart.max-file-size=${1:10MB}",
+    "description": "Maximum file upload size"
+  },
+  "Servlet Multipart Max Request Size": {
+    "prefix": "spring.servlet.multipart.max-request-size",
+    "body": "spring.servlet.multipart.max-request-size=${1:10MB}",
+    "description": "Maximum request size"
+  },
+  "Redis Host": {
+    "prefix": "spring.data.redis.host",
+    "body": "spring.data.redis.host=${1:localhost}",
+    "description": "Redis server host"
+  },
+  "Redis Port": {
+    "prefix": "spring.data.redis.port",
+    "body": "spring.data.redis.port=${1:6379}",
+    "description": "Redis server port"
+  },
+  "MongoDB URI": {
+    "prefix": "spring.data.mongodb.uri",
+    "body": "spring.data.mongodb.uri=mongodb://${1:localhost}:${2:27017}/${3:database}",
+    "description": "MongoDB connection URI"
+  },
+  "JPA Database Platform": {
+    "prefix": "spring.jpa.database-platform",
+    "body": "spring.jpa.database-platform=org.hibernate.dialect.${1|PostgreSQLDialect,MySQL8Dialect,H2Dialect|}",
+    "description": "JPA database platform"
+  },
+  "HikariCP Maximum Pool Size": {
+    "prefix": "spring.datasource.hikari.maximum-pool-size",
+    "body": "spring.datasource.hikari.maximum-pool-size=${1:10}",
+    "description": "HikariCP maximum pool size"
+  },
+  "HikariCP Minimum Idle": {
+    "prefix": "spring.datasource.hikari.minimum-idle",
+    "body": "spring.datasource.hikari.minimum-idle=${1:5}",
+    "description": "HikariCP minimum idle connections"
+  },
+  "Server SSL Enabled": {
+    "prefix": "server.ssl.enabled",
+    "body": "server.ssl.enabled=${1|true,false|}",
+    "description": "Enable SSL/HTTPS"
+  },
+  "Server SSL Key Store": {
+    "prefix": "server.ssl.key-store",
+    "body": "server.ssl.key-store=${1:classpath:keystore.p12}",
+    "description": "Path to SSL keystore"
+  },
+  "Server SSL Key Store Password": {
+    "prefix": "server.ssl.key-store-password",
+    "body": "server.ssl.key-store-password=${1:password}",
+    "description": "SSL keystore password"
+  },
+  "Server SSL Key Store Type": {
+    "prefix": "server.ssl.key-store-type",
+    "body": "server.ssl.key-store-type=${1|PKCS12,JKS|}",
+    "description": "SSL keystore type"
+  },
+  "Spring Mail Host": {
+    "prefix": "spring.mail.host",
+    "body": "spring.mail.host=${1:smtp.gmail.com}",
+    "description": "SMTP mail server host"
+  },
+  "Spring Mail Port": {
+    "prefix": "spring.mail.port",
+    "body": "spring.mail.port=${1:587}",
+    "description": "SMTP mail server port"
+  },
+  "Spring Mail Username": {
+    "prefix": "spring.mail.username",
+    "body": "spring.mail.username=${1:user@example.com}",
+    "description": "SMTP username"
+  },
+  "Spring Mail Password": {
+    "prefix": "spring.mail.password",
+    "body": "spring.mail.password=${1:password}",
+    "description": "SMTP password"
+  },
+  "Spring Config Import": {
+    "prefix": "spring.config.import",
+    "body": "spring.config.import=${1|optional:configserver:,optional:file:,optional:classpath:|}${2:config.properties}",
+    "description": "Import additional configuration files"
+  },
+  "Kafka Bootstrap Servers": {
+    "prefix": "spring.kafka.bootstrap-servers",
+    "body": "spring.kafka.bootstrap-servers=${1:localhost:9092}",
+    "description": "Kafka bootstrap servers"
+  },
+  "Kafka Consumer Group ID": {
+    "prefix": "spring.kafka.consumer.group-id",
+    "body": "spring.kafka.consumer.group-id=${1:my-group}",
+    "description": "Kafka consumer group ID"
+  },
+  "Kafka Consumer Auto Offset Reset": {
+    "prefix": "spring.kafka.consumer.auto-offset-reset",
+    "body": "spring.kafka.consumer.auto-offset-reset=${1|earliest,latest,none|}",
+    "description": "Kafka consumer auto offset reset strategy"
+  },
+  "Kafka Consumer Key Deserializer": {
+    "prefix": "spring.kafka.consumer.key-deserializer",
+    "body": "spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.${1|StringDeserializer,IntegerDeserializer,LongDeserializer|}",
+    "description": "Kafka consumer key deserializer"
+  },
+  "Kafka Consumer Value Deserializer": {
+    "prefix": "spring.kafka.consumer.value-deserializer",
+    "body": "spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.${1|StringDeserializer,JsonDeserializer|}",
+    "description": "Kafka consumer value deserializer"
+  },
+  "Kafka Producer Key Serializer": {
+    "prefix": "spring.kafka.producer.key-serializer",
+    "body": "spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.${1|StringSerializer,IntegerSerializer,LongSerializer|}",
+    "description": "Kafka producer key serializer"
+  },
+  "Kafka Producer Value Serializer": {
+    "prefix": "spring.kafka.producer.value-serializer",
+    "body": "spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.${1|StringSerializer,JsonSerializer|}",
+    "description": "Kafka producer value serializer"
+  },
+  "Kafka Producer Acks": {
+    "prefix": "spring.kafka.producer.acks",
+    "body": "spring.kafka.producer.acks=${1|all,0,1|}",
+    "description": "Kafka producer acknowledgment mode"
+  },
+  "Kafka Producer Retries": {
+    "prefix": "spring.kafka.producer.retries",
+    "body": "spring.kafka.producer.retries=${1:3}",
+    "description": "Kafka producer retry attempts"
+  },
+  "Kafka Listener Concurrency": {
+    "prefix": "spring.kafka.listener.concurrency",
+    "body": "spring.kafka.listener.concurrency=${1:3}",
+    "description": "Kafka listener concurrent threads"
+  },
+  "Spring Cloud Config URI": {
+    "prefix": "spring.cloud.config.uri",
+    "body": "spring.cloud.config.uri=${1:http://localhost:8888}",
+    "description": "Spring Cloud Config Server URI"
+  },
+  "Spring Cloud Config Username": {
+    "prefix": "spring.cloud.config.username",
+    "body": "spring.cloud.config.username=${1:user}",
+    "description": "Spring Cloud Config Server username"
+  },
+  "Spring Cloud Config Password": {
+    "prefix": "spring.cloud.config.password",
+    "body": "spring.cloud.config.password=${1:password}",
+    "description": "Spring Cloud Config Server password"
+  },
+  "Eureka Client Service URL": {
+    "prefix": "eureka.client.service-url.defaultZone",
+    "body": "eureka.client.service-url.defaultZone=${1:http://localhost:8761/eureka/}",
+    "description": "Eureka server URL"
+  },
+  "Eureka Instance Hostname": {
+    "prefix": "eureka.instance.hostname",
+    "body": "eureka.instance.hostname=${1:localhost}",
+    "description": "Eureka instance hostname"
+  },
+  "Eureka Client Enabled": {
+    "prefix": "eureka.client.enabled",
+    "body": "eureka.client.enabled=${1|true,false|}",
+    "description": "Enable Eureka client"
+  },
+  "Resilience4j Circuit Breaker Failure Rate": {
+    "prefix": "resilience4j.circuitbreaker.instances",
+    "body": "resilience4j.circuitbreaker.instances.${1:myService}.failure-rate-threshold=${2:50}",
+    "description": "Circuit breaker failure rate threshold"
+  },
+  "Resilience4j Retry Max Attempts": {
+    "prefix": "resilience4j.retry.instances",
+    "body": "resilience4j.retry.instances.${1:myService}.max-attempts=${2:3}",
+    "description": "Retry max attempts"
+  },
+  "Spring Cache Type": {
+    "prefix": "spring.cache.type",
+    "body": "spring.cache.type=${1|redis,caffeine,simple,none|}",
+    "description": "Spring cache type"
+  },
+  "Spring Cache Redis TTL": {
+    "prefix": "spring.cache.redis.time-to-live",
+    "body": "spring.cache.redis.time-to-live=${1:60000}",
+    "description": "Redis cache TTL in milliseconds"
+  },
+  "Spring Batch Job Enabled": {
+    "prefix": "spring.batch.job.enabled",
+    "body": "spring.batch.job.enabled=${1|true,false|}",
+    "description": "Enable automatic job execution"
+  },
+  "Spring JMS Pub Sub Domain": {
+    "prefix": "spring.jms.pub-sub-domain",
+    "body": "spring.jms.pub-sub-domain=${1|true,false|}",
+    "description": "Use publish-subscribe domain (topics) instead of point-to-point (queues)"
+  },
+  "Spring ActiveMQ Broker URL": {
+    "prefix": "spring.activemq.broker-url",
+    "body": "spring.activemq.broker-url=${1:tcp://localhost:61616}",
+    "description": "ActiveMQ broker URL"
+  },
+  "Spring RabbitMQ Host": {
+    "prefix": "spring.rabbitmq.host",
+    "body": "spring.rabbitmq.host=${1:localhost}",
+    "description": "RabbitMQ server host"
+  },
+  "Spring RabbitMQ Port": {
+    "prefix": "spring.rabbitmq.port",
+    "body": "spring.rabbitmq.port=${1:5672}",
+    "description": "RabbitMQ server port"
+  },
+  "Spring RabbitMQ Username": {
+    "prefix": "spring.rabbitmq.username",
+    "body": "spring.rabbitmq.username=${1:guest}",
+    "description": "RabbitMQ username"
+  },
+  "Spring RabbitMQ Password": {
+    "prefix": "spring.rabbitmq.password",
+    "body": "spring.rabbitmq.password=${1:guest}",
+    "description": "RabbitMQ password"
+  },
+  "Spring GraphQL Path": {
+    "prefix": "spring.graphql.path",
+    "body": "spring.graphql.path=${1:/graphql}",
+    "description": "GraphQL endpoint path"
+  },
+  "Spring GraphQL Schema Location": {
+    "prefix": "spring.graphql.schema.locations",
+    "body": "spring.graphql.schema.locations=${1:classpath:graphql/}",
+    "description": "GraphQL schema location"
+  },
+  "Spring OAuth2 Client Registration": {
+    "prefix": "spring.security.oauth2.client.registration",
+    "body": "spring.security.oauth2.client.registration.${1:google}.client-id=${2:your-client-id}\nspring.security.oauth2.client.registration.${1:google}.client-secret=${3:your-client-secret}",
+    "description": "OAuth2 client registration"
+  },
+  "Spring OAuth2 Resource Server JWT Issuer URI": {
+    "prefix": "spring.security.oauth2.resourceserver.jwt.issuer-uri",
+    "body": "spring.security.oauth2.resourceserver.jwt.issuer-uri=${1:http://localhost:8080/auth/realms/myrealm}",
+    "description": "JWT issuer URI for resource server"
+  },
+  "Spring Flyway Enabled": {
+    "prefix": "spring.flyway.enabled",
+    "body": "spring.flyway.enabled=${1|true,false|}",
+    "description": "Enable Flyway database migrations"
+  },
+  "Spring Flyway Locations": {
+    "prefix": "spring.flyway.locations",
+    "body": "spring.flyway.locations=${1:classpath:db/migration}",
+    "description": "Flyway migration scripts location"
+  },
+  "Spring Liquibase Enabled": {
+    "prefix": "spring.liquibase.enabled",
+    "body": "spring.liquibase.enabled=${1|true,false|}",
+    "description": "Enable Liquibase database migrations"
+  },
+  "Spring Liquibase Change Log": {
+    "prefix": "spring.liquibase.change-log",
+    "body": "spring.liquibase.change-log=${1:classpath:db/changelog/db.changelog-master.xml}",
+    "description": "Liquibase changelog file"
+  },
+  "Spring MVC Async Request Timeout": {
+    "prefix": "spring.mvc.async.request-timeout",
+    "body": "spring.mvc.async.request-timeout=${1:30000}",
+    "description": "Async request timeout in milliseconds"
+  },
+  "Spring MVC Throw Exception If No Handler Found": {
+    "prefix": "spring.mvc.throw-exception-if-no-handler-found",
+    "body": "spring.mvc.throw-exception-if-no-handler-found=${1|true,false|}",
+    "description": "Throw exception when no handler is found"
+  },
+  "Spring Web Resources Add Mappings": {
+    "prefix": "spring.web.resources.add-mappings",
+    "body": "spring.web.resources.add-mappings=${1|false,true|}",
+    "description": "Enable static resource handling"
+  },
+  "Spring Quartz Job Store Type": {
+    "prefix": "spring.quartz.job-store-type",
+    "body": "spring.quartz.job-store-type=${1|jdbc,memory|}",
+    "description": "Quartz job store type"
+  },
+  "Spring Task Scheduling Pool Size": {
+    "prefix": "spring.task.scheduling.pool.size",
+    "body": "spring.task.scheduling.pool.size=${1:10}",
+    "description": "Task scheduling pool size"
+  },
+  "Spring Task Execution Pool Core Size": {
+    "prefix": "spring.task.execution.pool.core-size",
+    "body": "spring.task.execution.pool.core-size=${1:8}",
+    "description": "Task execution pool core size"
+  },
+  "Spring Task Execution Pool Max Size": {
+    "prefix": "spring.task.execution.pool.max-size",
+    "body": "spring.task.execution.pool.max-size=${1:16}",
+    "description": "Task execution pool max size"
+  },
+  "Spring Session Store Type": {
+    "prefix": "spring.session.store-type",
+    "body": "spring.session.store-type=${1|redis,jdbc,hazelcast,mongodb,none|}",
+    "description": "Session store type"
+  },
+  "Spring H2 Console Enabled": {
+    "prefix": "spring.h2.console.enabled",
+    "body": "spring.h2.console.enabled=${1|true,false|}",
+    "description": "Enable H2 database console"
+  },
+  "Spring H2 Console Path": {
+    "prefix": "spring.h2.console.path",
+    "body": "spring.h2.console.path=${1:/h2-console}",
+    "description": "H2 console path"
+  },
+  "Spring Messages Basename": {
+    "prefix": "spring.messages.basename",
+    "body": "spring.messages.basename=${1:messages}",
+    "description": "Message resource bundle basename"
+  },
+  "Spring Messages Encoding": {
+    "prefix": "spring.messages.encoding",
+    "body": "spring.messages.encoding=${1:UTF-8}",
+    "description": "Message bundle encoding"
+  },
+  "Springdoc API Docs Path": {
+    "prefix": "springdoc.api-docs.path",
+    "body": "springdoc.api-docs.path=${1:/api-docs}",
+    "description": "OpenAPI docs path"
+  },
+  "Springdoc Swagger UI Path": {
+    "prefix": "springdoc.swagger-ui.path",
+    "body": "springdoc.swagger-ui.path=${1:/swagger-ui.html}",
+    "description": "Swagger UI path"
+  },
+  "Spring Data REST Base Path": {
+    "prefix": "spring.data.rest.base-path",
+    "body": "spring.data.rest.base-path=${1:/api}",
+    "description": "Spring Data REST base path"
+  },
+  "Server Compression Enabled": {
+    "prefix": "server.compression.enabled",
+    "body": "server.compression.enabled=${1|true,false|}",
+    "description": "Enable response compression"
+  },
+  "Server HTTP2 Enabled": {
+    "prefix": "server.http2.enabled",
+    "body": "server.http2.enabled=${1|true,false|}",
+    "description": "Enable HTTP/2 support"
+  },
+  "Server Tomcat Max Threads": {
+    "prefix": "server.tomcat.threads.max",
+    "body": "server.tomcat.threads.max=${1:200}",
+    "description": "Tomcat maximum worker threads"
+  },
+  "Server Tomcat Accept Count": {
+    "prefix": "server.tomcat.accept-count",
+    "body": "server.tomcat.accept-count=${1:100}",
+    "description": "Tomcat accept queue size"
+  },
+  "Server Tomcat Connection Timeout": {
+    "prefix": "server.tomcat.connection-timeout",
+    "body": "server.tomcat.connection-timeout=${1:20000}",
+    "description": "Tomcat connection timeout in milliseconds"
+  },
+  "Spring JPA Open In View": {
+    "prefix": "spring.jpa.open-in-view",
+    "body": "spring.jpa.open-in-view=${1|false,true|}",
+    "description": "Enable Open Session In View (OSIV) pattern"
+  },
+  "Spring JPA Generate DDL": {
+    "prefix": "spring.jpa.generate-ddl",
+    "body": "spring.jpa.generate-ddl=${1|false,true|}",
+    "description": "Enable DDL generation"
+  },
+  "Spring Datasource HikariCP Connection Timeout": {
+    "prefix": "spring.datasource.hikari.connection-timeout",
+    "body": "spring.datasource.hikari.connection-timeout=${1:30000}",
+    "description": "HikariCP connection timeout in milliseconds"
+  },
+  "Spring Datasource HikariCP Idle Timeout": {
+    "prefix": "spring.datasource.hikari.idle-timeout",
+    "body": "spring.datasource.hikari.idle-timeout=${1:600000}",
+    "description": "HikariCP idle timeout in milliseconds"
+  },
+  "Spring Datasource HikariCP Max Lifetime": {
+    "prefix": "spring.datasource.hikari.max-lifetime",
+    "body": "spring.datasource.hikari.max-lifetime=${1:1800000}",
+    "description": "HikariCP max connection lifetime in milliseconds"
+  }
+}

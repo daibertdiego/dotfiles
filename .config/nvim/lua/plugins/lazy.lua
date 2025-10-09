@@ -18,8 +18,22 @@ vim.o.termguicolors = true
 require("lazy").setup({
 	require("plugins.snack"),
 	require("plugins.ufo"),
-	{ "catppuccin/nvim", as = "catppuccin" },
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha",
+				transparent_background = true,
+				integrations = {
+					snacks = true,
+				},
+			})
+		end,
+	},
 	{ "echasnovski/mini.nvim", version = false },
+	{ "arnamak/stay-centered.nvim" },
 	{
 		"nvimdev/dashboard-nvim",
 		event = "VimEnter",
@@ -60,6 +74,12 @@ require("lazy").setup({
 		"Fildo7525/pretty_hover",
 		event = "LspAttach",
 		opts = {},
+		config = function()
+			require("pretty_hover").setup({
+				-- Disable for Java since jdtls registers hover capability late
+				disable = { filetypes = { "java" } },
+			})
+		end,
 	},
 	"nvim-lualine/lualine.nvim", -- Fancier statusline
 	-- Show opened buffers at the top
@@ -292,6 +312,12 @@ require("lazy").setup({
 				rust = { "rustfmt", lsp_format = "fallback" },
 				-- Conform will run the first available formatter
 				javascript = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettier" },
+				json = { "prettier" },
+				css = { "prettier" },
+				scss = { "prettier" },
+				html = { "prettier" },
+				htmlangular = { "prettier" },
 			},
 		},
 	},
@@ -318,6 +344,10 @@ require("lazy").setup({
 				"L3MON4D3/LuaSnip",
 				config = function()
 					require("luasnip.loaders.from_vscode").lazy_load()
+					-- Load custom Spring Boot snippets for properties files
+					require("luasnip.loaders.from_vscode").lazy_load({
+						paths = { vim.fn.stdpath("config") .. "/snippets" },
+					})
 				end,
 			},
 			"moyiz/blink-emoji.nvim",
@@ -352,7 +382,10 @@ require("lazy").setup({
 			"theHamsta/nvim-dap-virtual-text",
 		},
 	},
-	"mfussenegger/nvim-jdtls", -- Java Language Server and Debug adapter.
+	{
+		"mfussenegger/nvim-jdtls", -- Java Language Server and Debug adapter.
+		ft = "java", -- Only load for Java files
+	},
 	"theHamsta/nvim-dap-virtual-text",
 	{
 		"jellydn/hurl.nvim",
@@ -368,20 +401,6 @@ require("lazy").setup({
 				},
 				ft = { "markdown" },
 			},
-		},
-	},
-	-- ChatGPT
-	{
-		"jackMort/ChatGPT.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("chatgpt").setup()
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-			"folke/trouble.nvim", -- optional
-			"nvim-telescope/telescope.nvim",
 		},
 	},
 	-- Claude AI
@@ -411,6 +430,7 @@ require("lazy").setup({
 		dependencies = { "MunifTanjim/nui.nvim" },
 		opts = {
 			disable_mouse = false,
+			max_count = 10,
 		},
 	},
 	{

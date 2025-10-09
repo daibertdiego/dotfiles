@@ -35,25 +35,20 @@ require("codecompanion").setup({
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 -- Actions
-map("n", "<leader><leader>Ca", "<cmd>CodeCompanionActions<cr>", { desc = "CodeCompanion Actions", unpack(opts) })
-map("v", "<leader><leader>Ca", "<cmd>CodeCompanionActions<cr>", { desc = "CodeCompanion Actions", unpack(opts) })
+map("n", "<leader>aa", "<cmd>CodeCompanionActions<cr>", { desc = "CodeCompanion Actions", unpack(opts) })
+map("v", "<leader>aa", "<cmd>CodeCompanionActions<cr>", { desc = "CodeCompanion Actions", unpack(opts) })
 
 -- Chat Toggle
-map(
-	"n",
-	"<leader><leader>CC",
-	"<cmd>CodeCompanionChat Toggle<cr>",
-	{ desc = "CodeCompanion Chat Toggle", unpack(opts) }
-)
+map("n", "<leader>ai", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "CodeCompanion Chat Toggle", unpack(opts) })
 map(
 	"v",
-	"<leader><leader>CC",
+	"<leader><leader>ai",
 	"<cmd>CodeCompanionChat Toggle<cr>",
 	{ desc = "CodeCompanion Chat Toggle", unpack(opts) }
 )
 
 -- Add to Chat
-map("v", "<leader><leader>CA", "<cmd>CodeCompanionChat Add<cr>", { desc = "CodeCompanion Chat Add", unpack(opts) })
+map("v", "<leader>ac", "<cmd>CodeCompanionChat Add<cr>", { desc = "CodeCompanion Chat Add", unpack(opts) })
 
 -- Expand 'cc' into 'CodeCompanion' in command line
 vim.cmd([[cab cc CodeCompanion]])

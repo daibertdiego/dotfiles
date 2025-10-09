@@ -1,19 +1,16 @@
 local oil = require("oil")
+
 oil.setup({
-	-- Selecting a new/moved/renamed file or directory will prompt you to save changes first
 	prompt_save_on_select_new_entry = false,
-	-- Show hidden files by default
+	skip_confirm_for_simple_edits = true,
+	watch_for_changes = true,
 	show_hidden = true,
-	-- Enable file preview
 	view_options = {
-		-- Show previewer
 		show_hidden = true,
 	},
-	-- Preview window configuration
 	preview = {
-		-- Width of preview window (percentage or absolute value)
+		enabled = true,
 		width = 60,
-		-- Height of preview window (percentage or absolute value)
 		height = 40,
 	},
 	keymaps = {
@@ -26,4 +23,10 @@ oil.setup({
 	},
 })
 
-vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>-", function()
+	local util = require("oil.util")
+	oil.open()
+	util.run_after_load(0, function()
+		oil.open_preview()
+	end)
+end, { desc = "Open parent directory" })

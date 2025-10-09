@@ -1,5 +1,4 @@
--- lsp.lua
--- Setup diagnostics signs (modern way)
+-- Diagnostics (unchanged)
 local icons = require("lib.icons").diagnostics
 local signs = {
 	Error = icons.Error,
@@ -8,7 +7,6 @@ local signs = {
 	Info = icons.Information,
 }
 
--- Modern diagnostic config (replaces deprecated sign_define)
 vim.diagnostic.config({
 	signs = {
 		text = {
@@ -21,19 +19,13 @@ vim.diagnostic.config({
 	virtual_text = false,
 	update_in_insert = false,
 	severity_sort = true,
-	float = {
-		border = "rounded",
-		source = true,
-		header = "",
-		prefix = "",
-	},
+	float = { border = "rounded", source = true, header = "", prefix = "" },
 })
 
--- Global diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostic loclist" })
 
--- Define LSP keymaps
-local function on_attach(_, bufnr)
+-- on_attach (unchanged)
+local function on_attach(client, bufnr)
 	local nmap = function(keys, func, desc)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc and "LSP: " .. desc })
 	end
@@ -45,7 +37,14 @@ local function on_attach(_, bufnr)
 	end, "Goto References")
 	nmap("gI", vim.lsp.buf.implementation, "Goto Implementation")
 	nmap("gt", vim.lsp.buf.type_definition, "Goto Type Definition")
-	nmap("K", require("pretty_hover").hover, "Hover Doc")
+	nmap("gj", vim.diagnostic.goto_next, "Next Diagnostic")
+	nmap("gk", vim.diagnostic.goto_prev, "Prev Diagnostic")
+
+	-- Skip hover setup for jdtls (handled in ftplugin/java.lua)
+	if client.name ~= "jdtls" then
+		nmap("K", require("pretty_hover").hover, "Hover Doc")
+	end
+
 	nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
 	nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 	nmap("<leader>cs", function()
@@ -54,8 +53,6 @@ local function on_attach(_, bufnr)
 	nmap("<leader>ws", function()
 		require("telescope.builtin").lsp_dynamic_workspace_symbols()
 	end, "Workspace Symbols")
-	nmap("gj", vim.diagnostic.goto_next, "Next Diagnostic")
-	nmap("gk", vim.diagnostic.goto_prev, "Prev Diagnostic")
 	nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "Add Workspace Folder")
 	nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove Workspace Folder")
 	nmap("<leader>wl", function()
@@ -67,11 +64,11 @@ local function on_attach(_, bufnr)
 	end, { desc = "Format current buffer" })
 end
 
--- Capabilities from cmp
+-- Capabilities (unchanged)
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 vim.g.augment_disable_completions = 0
 
--- List of servers (fixed tsserver -> ts_ls)
+-- Servers
 local servers = {
 	"clangd",
 	"lua_ls",
@@ -83,65 +80,69 @@ local servers = {
 	"yamlls",
 	"emmet_ls",
 	"html",
+	"angularls",
 	"tailwindcss",
 	"kotlin_language_server",
 	"typos_lsp",
 	"bashls",
 }
 
--- Setup mason and mason-lspconfig
+-- Mason (install binaries)
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = servers,
-	automatic_enable = false,
+	automatic_installation = false,
+	handlers = {
+		-- Default handler for all servers
+		function(server_name)
+			-- Skip jdtls - handled by ftplugin/java.lua
+			if server_name == "jdtls" then
+				return
+			end
+			-- Let vim.lsp.config/enable handle it below
+		end,
+	},
 })
 
--- Setup LSP servers individually (replaces setup_handlers)
-local lspconfig = require("lspconfig")
+-- Helper: root dir like lspconfig.util.root_pattern, but via vim.fs
+local function root_by_markers(markers, startpath)
+	local found = vim.fs.find(markers, { path = startpath or vim.api.nvim_buf_get_name(0), upward = true })[1]
+	return found and vim.fs.dirname(found) or vim.loop.cwd()
+end
 
--- Default setup for most servers
+-- Define per-server configs using the new API
 for _, server in ipairs(servers) do
-	if server ~= "lua_ls" then -- Handle lua_ls separately
-		lspconfig[server].setup({
+	if server == "lua_ls" then
+		vim.lsp.config("lua_ls", {
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				Lua = {
+					diagnostics = { globals = { "vim" } },
+					workspace = { library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false },
+					telemetry = { enable = false },
+				},
+			},
+		})
+	else
+		vim.lsp.config(server, {
 			on_attach = on_attach,
 			capabilities = capabilities,
 		})
 	end
 end
 
--- Special setup for lua_ls
-lspconfig.lua_ls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				library = vim.api.nvim_get_runtime_file("", true),
-				checkThirdParty = false,
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-})
+-- Enable (autostart) servers (skip jdtls - it's in ftplugin/java.lua)
+for _, server in ipairs(servers) do
+	if server ~= "jdtls" then
+		vim.lsp.enable(server)
+	end
+end
 
--- Hover window border
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-	border = "rounded",
-})
+-- Note: JDTLS is blocked in ftplugin/java.lua to prevent vim.lsp.enable auto-start
 
--- Modern LSP start for bash
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "sh",
-	callback = function()
-		vim.lsp.start({
-			name = "bash-language-server",
-			cmd = { "bash-language-server", "start" },
-			root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]) or vim.fn.getcwd(),
-		})
-	end,
-})
+-- UI: rounded hover (unchanged)
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
+-- NOTE: you had a FileType autocmd to manually start bash LSP.
+-- Since 'bashls' is now in `servers` and enabled above, that autocmd is no longer needed.
