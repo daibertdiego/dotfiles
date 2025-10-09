@@ -68,7 +68,7 @@ end
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 vim.g.augment_disable_completions = 0
 
--- Servers
+-- Servers (jdtls handled by nvim-java)
 local servers = {
 	"clangd",
 	"lua_ls",

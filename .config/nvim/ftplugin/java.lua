@@ -187,7 +187,7 @@ local function on_attach(client, bufnr)
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, "List Workspace Folders")
 	vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
-		vim.lsp.buf.format()
+		require("conform").format({ bufnr = bufnr })
 	end, { desc = "Format current buffer" })
 	-- DAP run/debug main
 	vim.api.nvim_buf_create_user_command(bufnr, "JdtRunMain", function()
@@ -290,7 +290,7 @@ end
 
 -- ---------------- cmd (-data only) ----------------
 local cmd = { "jdtls", "-data", workspace_dir }
--- To force Mason’s jdtls binary, uncomment:
+-- To force Mason's jdtls binary, uncomment:
 -- local mason_registry = require("mason-registry")
 -- if mason_registry.has_package("jdtls") then
 --   local jdtls_pkg = mason_registry.get_package("jdtls")

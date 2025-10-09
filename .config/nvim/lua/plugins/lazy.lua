@@ -285,7 +285,7 @@ require("lazy").setup({
 		},
 		opts = {
 			notify_on_error = false,
-			format_after_save = function(bufnr)
+			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
@@ -293,11 +293,13 @@ require("lazy").setup({
 				local lsp_format_opt
 				if disable_filetypes[vim.bo[bufnr].filetype] then
 					lsp_format_opt = "never"
+				elseif vim.bo[bufnr].filetype == "java" then
+					lsp_format_opt = "never" -- Use google-java-format, not LSP
 				else
 					lsp_format_opt = "fallback"
 				end
 				return {
-					-- timeout_ms = 500,
+					timeout_ms = 10000,
 					lsp_format = lsp_format_opt,
 				}
 			end,
@@ -431,6 +433,7 @@ require("lazy").setup({
 		opts = {
 			disable_mouse = false,
 			max_count = 10,
+			enabled = false,
 		},
 	},
 	{
