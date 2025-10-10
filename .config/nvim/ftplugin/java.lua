@@ -64,6 +64,19 @@ local function runtime_name_from_major(major)
 	return major and ("JavaSE-%d"):format(major) or "JavaSE"
 end
 
+local function get_formatter_java()
+	-- Try Java 21 from SDKMAN first
+	local java21_path = vim.fn.expand("~/.sdkman/candidates/java/21.0.2-graalce/bin/java")
+	if vim.fn.executable(java21_path) == 1 then
+		return java21_path
+	end
+	-- Fallback to system java
+	if vim.fn.executable("java") == 1 then
+		return "java"
+	end
+	return nil
+end
+
 -- ---------------- resolve paths ----------------
 local root_dir = vim.fn.fnamemodify(project_root(), ":p") -- absolute
 local has_maven = (vim.fn.filereadable(root_dir .. "/pom.xml") == 1)
@@ -255,6 +268,7 @@ if has_maven or has_gradle then
 				url = vim.fn.stdpath("data") .. "/mason/packages/google-java-format/google-java-format.jar",
 				profile = "Google",
 			},
+			java = get_formatter_java(),
 		},
 	}
 else
@@ -284,6 +298,7 @@ else
 				url = vim.fn.stdpath("data") .. "/mason/packages/google-java-format/google-java-format.jar",
 				profile = "Google",
 			},
+			java = get_formatter_java(),
 		},
 	}
 end
