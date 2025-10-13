@@ -27,6 +27,17 @@ require("plugins.cloak")
 require("plugins.dad-ui")
 require("plugins.hurl")
 require("plugins.codecompanion")
-require("plugins.copilot")
 require("plugins.augment")
 require("plugins.stay-centered")
+
+-- Toggle Augment completions
+vim.api.nvim_create_user_command('AugmentToggle', function()
+  local current = vim.g.augment_disable_completions or 0
+  if current == 0 then
+    vim.g.augment_disable_completions = 1
+    print("Augment completions disabled")
+  else
+    vim.g.augment_disable_completions = 0
+    print("Augment completions enabled")
+  end
+end, {})

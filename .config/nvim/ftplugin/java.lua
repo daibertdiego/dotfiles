@@ -64,6 +64,23 @@ local function runtime_name_from_major(major)
 	return major and ("JavaSE-%d"):format(major) or "JavaSE"
 end
 
+local function get_jdtls_java_home()
+	-- jdtls must run on Java 17-21 (not 22+)
+	-- Try Java 21 from SDKMAN first
+	local java21_home = vim.fn.expand("~/.sdkman/candidates/java/21.0.2-graalce")
+	if vim.fn.isdirectory(java21_home) == 1 then
+		return vim.fn.fnamemodify(java21_home, ":p")
+	end
+	-- Fallback to detected java if it's compatible
+	local detected = detect_java_home()
+	local major = detect_java_major_version()
+	if detected and major and major >= 17 and major <= 21 then
+		return detected
+	end
+	-- Last resort: try system java
+	return detected
+end
+
 local function get_formatter_java()
 	-- Try Java 21 from SDKMAN first
 	local java21_path = vim.fn.expand("~/.sdkman/candidates/java/21.0.2-graalce/bin/java")
@@ -111,16 +128,28 @@ for _, client in ipairs(vim.lsp.get_clients({ name = "jdtls" })) do
 	end
 end
 
--- ---------------- runtime (SDKMAN) ----------------
-local JAVA_HOME = detect_java_home()
-if not JAVA_HOME then
-	vim.notify(
-		"[jdtls] JAVA_HOME not found. Start Neovim from a shell where SDKMAN set it, or `sdk default java`.",
-		vim.log.levels.WARN
-	)
+-- ---------------- runtime ----------------
+-- jdtls server runtime (must be Java 17-21)
+local JDTLS_JAVA_HOME = get_jdtls_java_home()
+if not JDTLS_JAVA_HOME then
+	vim.notify("[jdtls] Could not find Java 17-21 for jdtls server", vim.log.levels.ERROR)
+	return
 end
-JAVA_HOME = JAVA_HOME and vim.fn.fnamemodify(JAVA_HOME, ":p") or nil
-local runtime_name = runtime_name_from_major(detect_java_major_version())
+
+-- Project runtime (can be any version including Java 25)
+local PROJECT_JAVA_HOME = detect_java_home()
+local project_major = detect_java_major_version()
+
+-- Configure runtimes: jdtls will know about both Java 21 and the project's Java version
+local runtimes = {
+	{ name = "JavaSE-21", path = JDTLS_JAVA_HOME, default = true },
+}
+if PROJECT_JAVA_HOME and PROJECT_JAVA_HOME ~= JDTLS_JAVA_HOME then
+	table.insert(runtimes, {
+		name = runtime_name_from_major(project_major),
+		path = vim.fn.fnamemodify(PROJECT_JAVA_HOME, ":p"),
+	})
+end
 
 -- ---------------- DAP/Test bundles (Mason) ----------------
 local mason = vim.fn.stdpath("data") .. "/mason/packages"
@@ -248,12 +277,7 @@ if has_maven or has_gradle then
 	-- Build tool present: let JDTLS use its Maven/Gradle providers (enables DAP classpath)
 	java_settings = {
 		configuration = {
-			runtimes = (function()
-				if not JAVA_HOME then
-					return nil
-				end
-				return { { name = runtime_name, path = JAVA_HOME } }
-			end)(),
+			runtimes = runtimes,
 			updateBuildConfiguration = "interactive", -- or "automatic"
 		},
 		import = {
@@ -275,12 +299,7 @@ else
 	-- NO build file: disable Maven/Gradle providers to avoid m2e error; give simple project hints
 	java_settings = {
 		configuration = {
-			runtimes = (function()
-				if not JAVA_HOME then
-					return nil
-				end
-				return { { name = runtime_name, path = JAVA_HOME } }
-			end)(),
+			runtimes = runtimes,
 			updateBuildConfiguration = "disabled",
 		},
 		import = {
@@ -303,14 +322,24 @@ else
 	}
 end
 
--- ---------------- cmd (-data only) ----------------
-local cmd = { "jdtls", "-data", workspace_dir }
--- To force Mason's jdtls binary, uncomment:
--- local mason_registry = require("mason-registry")
--- if mason_registry.has_package("jdtls") then
---   local jdtls_pkg = mason_registry.get_package("jdtls")
---   cmd = { jdtls_pkg:get_install_path() .. "/bin/jdtls", "-data", workspace_dir }
--- end
+-- ---------------- cmd ----------------
+-- Force jdtls to run with Java 21 (not the project's Java version)
+local jdtls_bin = JDTLS_JAVA_HOME .. "/bin/java"
+local cmd = {
+	jdtls_bin,
+	"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+	"-Dosgi.bundles.defaultStartLevel=4",
+	"-Declipse.product=org.eclipse.jdt.ls.core.product",
+	"-Dlog.protocol=true",
+	"-Dlog.level=ALL",
+	"-Xmx1g",
+	"--add-modules=ALL-SYSTEM",
+	"--add-opens", "java.base/java.util=ALL-UNNAMED",
+	"--add-opens", "java.base/java.lang=ALL-UNNAMED",
+	"-jar", vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
+	"-configuration", vim.fn.stdpath("data") .. "/mason/packages/jdtls/config_" .. (vim.fn.has("mac") == 1 and "mac" or "linux"),
+	"-data", workspace_dir,
+}
 
 -- ---------------- start_or_attach ----------------
 local cfg = {
