@@ -93,7 +93,7 @@ return {
 			desc = "Lazygit Log (cwd)",
 		},
 		{
-			"<leader>cR",
+			"<leader>cF",
 			function()
 				Snacks.rename.rename_file()
 			end,

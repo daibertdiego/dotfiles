@@ -1,3 +1,8 @@
+-- Run code
+vim.keymap.set("n", "<leader>cR", function()
+	require("utils").run_code()
+end, { noremap = true, silent = true, desc = "Run code" })
+
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true, desc = "Indent left and stay" })
 vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true, desc = "Indent right and stay" })
@@ -140,7 +145,7 @@ vim.keymap.set("n", "z=", function()
 			end
 		end)
 	)
-end)
+end, { desc = "Spell suggestions for word under cursor" })
 
 local function toggle_float_term()
 	local term_id = vim.api.nvim_get_current_buf()

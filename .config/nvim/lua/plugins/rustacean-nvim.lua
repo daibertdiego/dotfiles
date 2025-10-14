@@ -27,12 +27,6 @@ vim.g.rustaceanvim = function()
 				vim.keymap.set("n", "<leader>ca", function()
 					vim.cmd.RustLsp("codeAction")
 				end, { silent = true, buffer = bufnr, desc = "Code Actions" })
-
-				vim.keymap.set("n", "<leader>cR", function()
-					vim.cmd.RustLsp("runnables")
-					-- Move the buffer to a horizontal split below
-					vim.cmd("wincmd J")
-				end, { silent = true, buffer = bufnr, desc = "Run Runnables" })
 			end,
 			default_settings = {
 				["rust-analyzer"] = {

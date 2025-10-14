@@ -3,7 +3,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "go",
 	callback = function()
 		-- Define your keymaps for Go files
-		vim.keymap.set("n", "<leader>cR", ":GoRun<CR>", { buffer = true, silent = true, desc = "Go Run main" })
 		vim.keymap.set(
 			"n",
 			"<leader>ct",

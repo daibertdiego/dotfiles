@@ -28,7 +28,7 @@ require("gitsigns").setup({
 				gs.next_hunk()
 			end)
 			return "<Ignore>"
-		end, { expr = true })
+		end, { expr = true, desc = "Next git hunk" })
 
 		map("n", "[c", function()
 			if vim.wo.diff then
@@ -38,7 +38,7 @@ require("gitsigns").setup({
 				gs.prev_hunk()
 			end)
 			return "<Ignore>"
-		end, { expr = true })
+		end, { expr = true, desc = "Previous git hunk" })
 
 		-- Actions
 
