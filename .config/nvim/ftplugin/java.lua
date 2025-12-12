@@ -71,6 +71,17 @@ local bundles = {}
 vim.list_extend(bundles, globs(mason .. "/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"))
 vim.list_extend(bundles, globs(mason .. "/java-test/extension/server/*.jar"))
 
+-- Add annotation processor JARs from .factorypath
+local factorypath = root_dir .. "/.factorypath"
+if vim.fn.filereadable(factorypath) == 1 then
+	local content = table.concat(vim.fn.readfile(factorypath), "\n")
+	for jar in content:gmatch('id="([^"]*%.jar)"') do
+		if vim.fn.filereadable(jar) == 1 then
+			table.insert(bundles, jar)
+		end
+	end
+end
+
 -- Global code action deduplication
 if not _G.jdtls_code_action_handler_set then
 	_G.jdtls_code_action_handler_set = true
@@ -175,6 +186,21 @@ end
 -- Capabilities
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+-- Find Lombok JAR from project
+local function find_lombok_jar()
+	local factorypath = root_dir .. "/.factorypath"
+	if vim.fn.filereadable(factorypath) == 1 then
+		local content = table.concat(vim.fn.readfile(factorypath), "\n")
+		local jar = content:match('id="([^"]*lombok[^"]*%.jar)"')
+		if jar and vim.fn.filereadable(jar) == 1 then
+			return jar
+		end
+	end
+	return nil
+end
+
+local lombok_jar = find_lombok_jar()
+
 -- Build JDTLS command (use Java 21 for JDTLS server)
 local cmd = {
 	jdtls_config.JDTLS_JAVA_BIN,
@@ -189,6 +215,14 @@ local cmd = {
 	"java.base/java.util=ALL-UNNAMED",
 	"--add-opens",
 	"java.base/java.lang=ALL-UNNAMED",
+}
+
+-- Add Lombok javaagent if found
+if lombok_jar then
+	table.insert(cmd, "-javaagent:" .. lombok_jar)
+end
+
+vim.list_extend(cmd, {
 	"-jar",
 	vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
 	"-configuration",
@@ -197,7 +231,7 @@ local cmd = {
 		.. (vim.fn.has("mac") == 1 and "mac" or "linux"),
 	"-data",
 	workspace_dir,
-}
+})
 
 -- Start JDTLS
 local cfg = {

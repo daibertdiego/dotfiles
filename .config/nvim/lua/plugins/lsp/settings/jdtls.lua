@@ -71,6 +71,7 @@ M.settings = {
 		},
 		maven = { downloadSources = true },
 		eclipse = { downloadSources = true },
+		autobuild = { enabled = true },
 		format = {
 			enabled = true,
 			settings = {

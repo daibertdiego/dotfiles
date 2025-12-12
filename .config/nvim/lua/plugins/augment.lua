@@ -2,6 +2,9 @@
 -- Load augment.nvim
 require("augment") -- Ensure plugin is loaded
 
+-- Disable default Tab mapping
+vim.g.augment_no_maps = 1
+
 -- Key mappings using <Cmd> to avoid context issues
 vim.keymap.set("i", "<C-y>", "<Cmd>call augment#Accept()<CR>", {
 	noremap = true,

@@ -152,6 +152,16 @@ require("lazy").setup({
 			})
 		end,
 	},
+	-- Emmet support for HTML abbreviations (div>ul>li*3)
+	-- Use Tab to expand
+	{
+		"mattn/emmet-vim",
+		ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+		init = function()
+			vim.g.user_emmet_mode = "inv" -- enable in insert, normal, and visual modes
+			vim.g.user_emmet_expandabbr_key = "<Tab>"
+		end,
+	},
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

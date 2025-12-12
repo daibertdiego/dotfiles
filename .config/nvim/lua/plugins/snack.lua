@@ -161,7 +161,7 @@ return {
 			function()
 				Snacks.picker.buffers()
 			end,
-			desc = "[ ] Find existing buffers",
+			desc = "[S]earch [B]uffers",
 		},
 		{
 			"<leader>sc",

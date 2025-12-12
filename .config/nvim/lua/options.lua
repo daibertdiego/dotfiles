@@ -2,6 +2,9 @@
 --vim.cmd [[colorscheme onedark]]
 -- vim.cmd.colorscheme "catppuccin-frappe"
 
+-- Set GUI font
+vim.opt.guifont = "Fira Code:h15"
+
 -- vim.g.dap_log_level = 3 -- Debug level logging
 -- vim.g.dap_log_to_file = true -- Log to file
 
