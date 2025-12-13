@@ -202,10 +202,7 @@ require("lazy").setup({
 			"MunifTanjim/nui.nvim",
 		},
 	},
-	{
-		"mistricky/codesnap.nvim",
-		build = "make",
-	},
+	{ "mistricky/codesnap.nvim", tag = "v1.6.3", build = "make" },
 	{
 		"folke/todo-comments.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
@@ -363,7 +360,6 @@ require("lazy").setup({
 				end,
 			},
 			"moyiz/blink-emoji.nvim",
-			"giuxtaposition/blink-cmp-copilot",
 		},
 		version = "*",
 		opts_extend = { "sources.default" },
@@ -422,12 +418,6 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 		},
-		config = true,
-	},
-	{
-		"zbirenbaum/copilot.lua",
-		dependencies = { "giuxtaposition/blink-cmp-copilot" },
-		event = "InsertEnter",
 	},
 	-- Typing exercises from neovim with stats
 	{

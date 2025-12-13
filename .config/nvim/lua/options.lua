@@ -15,6 +15,8 @@ vim.opt.mousescroll = "ver:1,hor:1"
 vim.opt.expandtab = true -- convert tabs to spces
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab
+vim.opt.autoindent = true -- automatically indent new lines
+vim.opt.smartindent = true -- smart indenting for C-like programs
 
 -- Set highlight on search
 vim.o.hlsearch = true

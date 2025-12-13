@@ -1,21 +1,3 @@
--- Source Copilot
--- copilot = {
--- 	name = "copilot",
--- 	module = "blink-cmp-copilot",
--- 	score_offset = 100,
--- 	async = true,
--- 	min_keyword_length = 6,
--- 	transform_items = function(_, items)
--- 		local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
--- 		local kind_idx = #CompletionItemKind + 1
--- 		CompletionItemKind[kind_idx] = "Copilot"
--- 		for _, item in ipairs(items) do
--- 			item.kind = kind_idx
--- 		end
--- 		return items
--- 	end,
--- },
-
 local blink = require("blink.cmp")
 local icons = require("lib.icons")
 -- NOTE: Specify the trigger character(s) used for luasnip
@@ -198,20 +180,4 @@ blink.setup({
 			},
 		},
 	},
-})
-
--- Hide Copilot on suggestion
-vim.api.nvim_create_autocmd("User", {
-	pattern = "BlinkCmpMenuOpen",
-	callback = function()
-		require("copilot.suggestion").dismiss()
-		vim.b.copilot_suggestion_hidden = true
-	end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "BlinkCmpMenuClose",
-	callback = function()
-		vim.b.copilot_suggestion_hidden = false
-	end,
 })

@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
 })
 
 require("codecompanion").setup({
+	ignore_warnings = true,
 	strategies = {
 		chat = {
 			adapter = "anthropic",
