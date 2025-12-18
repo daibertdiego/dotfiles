@@ -1,183 +1,386 @@
-"" Source your .vimrc
-source ~/.vimrc
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
 
-Plug 'preservim/nerdtree'
+" Leader key
+let mapleader = " "
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
 set ideajoin
 set vim-paragraph-motion
-set highlightedyank
 set textobj-indent
 set idearefactormode=keep
 set matchit
 set ideamarks
 set multiple-cursors
-set surround
+set nerdtree
+set easymotion
+
+" File Explorer
+nmap <leader>- :NERDTreeToggle<CR>
+nmap <leader>e <Action>(SelectInProjectView)
 
 " easymotion
-set easymotion
 let g:EasyMotion_override_acejump = 0
 let g:EasyMotion_do_mapping = 0
 map <Leader><Leader>F <Plug>(easymotion-s)
 map <Leader><Leader>f <Plug>(easymotion-f)
-" map <Leader> <Plug>(easymotion-prefix)
-
-set clipboard=unnamedplus
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-set number
-set showcmd
-
-"let mapleader = ','
-
-" Set space as Leader key
-nnoremap <SPACE> <Nop>
-let mapleader=" "
-
-" remove highlights on enter
-nnoremap <CR> :noh<CR><CR>
-" don't yank overridden text when pasting in visual mode
-vnoremap p "_dP
-
-" jetbrains smart select/unselect
-nmap s <Action>(EditorSelectWord)
-nmap S <Action>(EditorUnSelectWord)
-vmap s <Action>(EditorSelectWord)
-vmap S <Action>(EditorUnSelectWord)
-
-" vim surround
-" Basic Commands:
-" cs Change surrounding
-" cst Change surrounding tag
-" ds Delete surrounding
-" dst Delete surrounding tag
-" ys Surround text object
-
-
-" compile
-map <leader>c <Action>(BuildProject)
-" run Program
-map <leader>r <Action>(RunClass)
-" debug
-:map <leader>d <Action>(Debug)
-" stop
-map <leader>q <Action>(Stop)
-" inspect
-map <leader>i <Action>(ShowErrorDescription)
-" tree
-map <leader>t <Action>(SelectInProjectView)
-" order
-map <leader>o <Action>(ReformatCode)
-" actions
-map <leader>a <Action>(GoToAction)
-" usages
-map <leader>u <Action>(FindUsages)
-" number
-map <leader>n :set relativenumber!<CR>
-" history
-map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
-" line
-map <leader>db <Action>(ToggleLineBreakpoint)
-" reformat
-map <leader>f <Action>(ReformatCode)
-" save file
-map <leader>s <Action>(SaveAll)
-" toggle case
-map gh <Action>(StringManipulation.ToggleCase)<ESC>
-" toggle project explorer
-map <leader>e :NERDTreeToggle<CR>
-" close active tab
-map <S-q> <Action>(CloseEditor)
-" move to previous tab
-map <S-h> <Action>(PreviousTab)
-" move to next tab
-map <S-l> <Action>(NextTab)
-" comment by line
-map <leader>/ <Action>(CommentByLineComment)
-" comment by block
-map <leader><S-/> <Action>(CommentByBlockComment)
-" toggle terminal window
-map <leader>t <Action>(ActivateTerminalToolWindow)<CR>
-" open file in terminal
-map <leader><S-t> <Action>(Terminal.OpenInTerminal)
-
-" navigate errors
-map gj <Action>(GotoNextError)
-map gk <Action>(GotoPreviousError)
-" navigate local changes
-map g; <Action>(VcsShowNextChangeMarker)
-map g, <Action>(VcsShowPrevChangeMarker)
-" global search
-map <leader><leader> <Action>(FindInPath)
-" CamelCase/snake_case word motions
-map <leader>w [w
-map <leader>b [b
-" map <leader>e ]w
-" map <leader>ge ]b
-" multiple cursors
-map <C-A-l> <Action>(EditorAddCaretPerSelectedLine)
-map <A-k> <Action>(EditorCloneCaretAbove)
-map <A-.> <Plug>AllWholeOccurrences
-map <C-A-n> <Plug>NextOccurrence
-map <C-A-m> <Plug>AllOccurrences
-map <A-j> <Action>(EditorCloneCaretBelow)
-map <A-S-k> <Action>(MoveLineUp) "<A-S-Up>
-map <A-S-j> <Action>(MoveLineDown) "<A-S-Down>
-" panes
-map <C-A-j> <Action>(NextSplitter)
-map <C-A-k> <Action>(PrevSplitter)
-
-" refactor
-map <leader>jv <Action>(IntroduceVariable)
-map <leader>jm <Action>(ExtractMethod)
-map <leader>jc <Action>(IntroduceConstant)
-map <leader>gr <Action>(RenameElement)
-
-" Indent keeping selection
-vnoremap < <gv
-vnoremap > >gv
-vnoremap = =gv
-
-" Reselect pasted text
-nnoremap gp `[v`]
-
-" Make Y consistent with other capital letter actions (A, C, D...)
-nnoremap Y y$
-xnoremap Y y$
 
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
-"set scrolloff=5
+set scrolloff=5
 
 " Do incremental searching.
-"set incsearch
-"set showmode
+set incsearch
+
+" Tabs and indentation
+set expandtab        " Convert tabs to spaces
+set shiftwidth=2     " Number of spaces for each indentation
+set tabstop=2        " Insert 2 spaces for a tab
+
+" Highlight search results
+set hlsearch
+
+" Enable true colors (requires a compatible terminal)
+set termguicolors
+
+" Line numbers
+set number           " Show absolute line numbers
+set relativenumber   " Show relative line numbers
+
+" Wrap long lines
+set wrap
+
+" Enable break indent
+set breakindent
+
+" Splits configuration
+set splitbelow       " Open horizontal splits below the current window
+set splitright       " Open vertical splits to the right of the current window
+
+" Case-insensitive search unless uppercase letters are used
+set ignorecase
+set smartcase
+
+" Enable spell checking
+set spell
+
+" Faster updates
+set updatetime=250
+set signcolumn=yes   " Always show the sign column
+
+" Clipboard synchronization
+set clipboard=unnamedplus
+
+" Conceal level
+set conceallevel=2
+
+" Highlight the current line
+set cursorline
+
+" Remove tilde (~) from empty lines
+set fillchars=eob:\
 
 " Don't use Ex mode, use Q for formatting.
-"map Q gq
+map Q gq
+
+
 
 "" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
-"" Map \r to the Reformat Code action
-"map \r <Action>(ReformatCode)
 
-"Find more examples here: https://jb.gg/share-ideavimrc
-set clipboard+=ideaput
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Search & Navigation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" File Search
+map <leader>sf <Action>(GotoFile)
+map <leader><space> <Action>(GotoFile)
+map <leader>? <Action>(RecentFiles)
+map <leader>, <Action>(RecentFiles)
 
-" Using arrow keys is far too ingrained in my muscle memory.
-" map <up> <nop>
-" map <down> <nop>
-" map <left> <nop>
-" map <right> <nop>
-" imap <up> <nop>
-" imap <down> <nop>
-" imap <left> <nop>
-" imap <right> <nop>
+" Text Search
+map <leader>sg <Action>(FindInPath)
+map <leader>s/ <Action>(FindInPath)
+map <leader>sw <Action>(FindWordAtCaret)
 
-" delete without yanking
-nnoremap <leader>d "_d
-vnoremap <leader>d "_d
+" Symbol Search (workspace-wide)
+map <leader>ws <Action>(GotoSymbol)
 
-" replace currently selected text with default register without yanking it
-vnoremap <leader>p "_dP
+" File Structure / Symbols in Current File
+map <leader>cs <Action>(FileStructurePopup)
+map <leader>cf <Action>(FileStructurePopup)
+
+" Buffer/Tab Navigation
+map <leader>sb <Action>(Switcher)
+
+" Search Keymaps
+map <leader>sk <Action>(GotoAction)
+
+" Search Help
+map <leader>sh <Action>(HelpTopics)
+
+" Search Diagnostics/Problems
+map <leader>sd <Action>(ActivateProblemsViewToolWindow)
+
+" Git Status
+map <leader>sS <Action>(Vcs.Show.Local.Changes)
+
+" Recent Locations
+map g; <Action>(RecentLocations)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" LSP-like Navigation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Go to Definition/Declaration
+map gd <Action>(GotoDeclaration)
+map gD <Action>(GotoTypeDeclaration)
+
+" Go to Implementation
+map gI <Action>(GotoImplementation)
+
+" Go to References
+map gr <Action>(FindUsages)
+
+" Go to Type Definition
+map gt <Action>(GotoTypeDeclaration)
+
+" Navigate Diagnostics
+map gj <Action>(GotoNextError)
+map gk <Action>(GotoPreviousError)
+
+" Navigate Between Methods/Functions
+map ]] <Action>(MethodDown)
+map [[ <Action>(MethodUp)
+
+" Hover Documentation
+map K <Action>(QuickJavaDoc)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Code Actions & Refactoring
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Code Actions
+map <leader>ca <Action>(ShowIntentionActions)
+vmap <leader>ca <Action>(ShowIntentionActions)
+
+" Rename
+map <leader>cr <Action>(RenameElement)
+map <leader>r <Action>(RenameElement)
+
+" Extract refactorings
+map <leader>cv <Action>(IntroduceVariable)
+vmap <leader>cv <Action>(IntroduceVariable)
+map <leader>cm <Action>(ExtractMethod)
+vmap <leader>cm <Action>(ExtractMethod)
+map <leader>cc <Action>(IntroduceConstant)
+vmap <leader>cc <Action>(IntroduceConstant)
+map <leader>ci <Action>(ExtractInterface)
+vmap <leader>ci <Action>(ExtractInterface)
+
+" Reformat Code
+map <leader>f <Action>(ReformatCode)
+vmap <leader>f <Action>(ReformatCode)
+
+" Rename File
+map <leader>cR <Action>(RenameFile)
+
+" Commenting
+map <leader>/ <Action>(CommentByLineComment)
+vmap <leader>/ <Action>(CommentByLineComment)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Debugging (DAP-like)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Start/Continue Debug
+map <leader>ds <Action>(Debug)
+map <leader>dc <Action>(Resume)
+
+" Toggle Breakpoint
+map <leader>db <Action>(ToggleLineBreakpoint)
+
+" Conditional Breakpoint
+map <leader>dB <Action>(ToggleBreakpointEnabled)
+
+" Debug UI / Tool Window
+map <leader>dt <Action>(ActivateDebugToolWindow)
+map <leader>dr <Action>(ActivateRunToolWindow)
+
+" Step Actions
+map <F5> <Action>(StepOut)
+map <F7> <Action>(StepInto)
+map <F8> <Action>(StepOver)
+map <F9> <Action>(Resume)
+
+" Stop/Terminate Debug
+map <leader>dq <Action>(Stop)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run Actions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run Application
+map <leader>rr <Action>(Run)
+map <leader>rc <Action>(RunClass)
+map <leader>rf <Action>(ChooseRunConfiguration)
+
+" Stop Application
+map <leader>rq <Action>(Stop)
+
+" Re-run
+map <leader>rs <Action>(Rerun)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Git Integration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Git Status/Changes
+map <leader>gs <Action>(Vcs.Show.Local.Changes)
+
+" Git Blame
+map <leader>gb <Action>(Annotate)
+
+" Git Log
+map <leader>gl <Action>(Vcs.Show.Log)
+
+" Git File History
+map <leader>gf <Action>(Vcs.ShowTabbedFileHistory)
+
+" Git Branches
+map <leader>gB <Action>(Git.Branches)
+
+" Git Commit
+map <leader>gc <Action>(CheckinProject)
+
+" Git Push
+map <leader>gP <Action>(Vcs.Push)
+
+" Git Pull
+map <leader>gp <Action>(Vcs.UpdateProject)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Harpoon-like (Bookmarks)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Toggle Bookmark
+map <leader>m <Action>(ToggleBookmark)
+
+" Show Bookmarks
+map <leader>h <Action>(ShowBookmarks)
+
+" Navigate to numbered bookmarks (use mnemonic bookmarks in IntelliJ)
+map <leader>1 <Action>(GotoBookmark1)
+map <leader>2 <Action>(GotoBookmark2)
+map <leader>3 <Action>(GotoBookmark3)
+map <leader>4 <Action>(GotoBookmark4)
+map <leader>5 <Action>(GotoBookmark5)
+map <leader>6 <Action>(GotoBookmark6)
+map <leader>7 <Action>(GotoBookmark7)
+map <leader>8 <Action>(GotoBookmark8)
+map <leader>9 <Action>(GotoBookmark9)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Workspace Management
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Toggle Tool Windows
+map <leader>uw <Action>(HideAllWindows)
+
+" Toggle Terminal (both normal and terminal mode)
+nmap <C-\> <Action>(ActivateTerminalToolWindow)
+tmap <C-\> <Action>(ActivateTerminalToolWindow)
+
+" Toggle Line Numbers
+map <leader>ul <Action>(EditorToggleShowLineNumbers)
+
+" Toggle Relative Line Numbers
+map <leader>uL <Action>(EditorToggleShowLineNumbers)
+
+" Toggle Diagnostics/Problems
+map <leader>ud <Action>(ActivateProblemsViewToolWindow)
+
+" Dismiss Notifications
+map <leader><leader> <Action>(CloseAllNotifications)
+
+
+" Key mappings
+" Indent and stay in visual mode
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+" Paste without replacing register
+xnoremap p "_dP
+
+" Exit insert mode
+inoremap <C-c> <Esc>
+nnoremap <C-c> <Esc>
+
+" Buffers
+nnoremap <leader>bk :blast<CR>
+nnoremap <leader>bj :bfirst<CR>
+nnoremap <leader>bb :bprev<CR>
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bd :bdelete!<CR>
+nnoremap <leader>bc :bdelete!<CR>
+nnoremap <leader>bx <C-w>o
+
+" Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+" File operations
+nnoremap QQ :q!<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <CR> :noh<CR>
+
+" Splits resizing
+nnoremap <C-W>, :vertical resize -10<CR>
+nnoremap <C-W>. :vertical resize +10<CR>
+
+
+
+" Moving code blocks
+xnoremap J :m '>+1<CR>gv=gv
+xnoremap K :m '<-2<CR>gv=gv
+
+" Navigation enhancements
+nnoremap J mzJ`z
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+" Handle word wrap in navigation
+nnoremap k gk
+nnoremap j gj
+
+" Yank to system clipboard
+nnoremap <leader>y :%y+<CR>
+vnoremap <leader>y "+y
+
+" Delete without copying to register
+nnoremap <leader>x "_d
+vnoremap <leader>x "_d
+
+" Visual select entire buffer
+nnoremap <leader>v ggVG
+
+" Make file executable
+" nnoremap <leader>x :!chmod +x %<CR>
+
+" Search and replace word under cursor
+" nnoremap <leader>r :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+
+" Open parent directory
+" nnoremap <leader>- :Oil<CR>
+
